@@ -20,7 +20,6 @@ namespace RestaurantPOS.Data.Configurations
             builder.Property(bd => bd.Price).IsRequired();
 
             builder.HasOne(bd => bd.Bill).WithMany(k => k.BillDetails).HasForeignKey(bd => bd.BillId);
-            builder.HasOne(bd => bd.Food).WithMany(k => k.BillDetails).HasForeignKey(bd => bd.FoodId);
         }
     }
 }

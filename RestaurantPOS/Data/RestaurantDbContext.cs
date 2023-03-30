@@ -18,6 +18,7 @@ namespace RestaurantPOS.Data
             modelBuilder.ApplyConfiguration(new TableConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new FoodConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderTableConfiguration());
             modelBuilder.ApplyConfiguration(new BillConfiguration());
             modelBuilder.ApplyConfiguration(new BillDetailConfiguration());
@@ -26,6 +27,7 @@ namespace RestaurantPOS.Data
         public DbSet<Table> Table { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Food> Food { get; set; }
+        public DbSet<Category> Category { get; set; }
         public DbSet<OrderTable> OderTable { get; set; }
         public DbSet<Bill> Bill { get; set; }
         public DbSet<BillDetail> BillDetail { get; set; }
