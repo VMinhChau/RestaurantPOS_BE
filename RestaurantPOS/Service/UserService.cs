@@ -5,7 +5,7 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
-using RestaurantPOS.Service.Interface;
+using RestaurantPOS.Interface;
 
 namespace RestaurantPOS.Service
 {
@@ -39,21 +39,21 @@ namespace RestaurantPOS.Service
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var entity = await _dbContext.User.FindAsync(id);
             _dbContext.User.Remove(entity!);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<UserDto> GetAsync(int id)
+        public async Task<UserDto> GetAsync(Guid id)
         {
             var entity = await _dbContext.User.FirstOrDefaultAsync(c => c.Id == id);
 
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<UserDto> UpdateAsync(int id, UpdateUserDto input)
+        public async Task<UserDto> UpdateAsync(Guid id, UpdateUserDto input)
         {
             var entity = await _dbContext.User.FirstOrDefaultAsync(c => c.Id == id);
 

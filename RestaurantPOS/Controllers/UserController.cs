@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
-using RestaurantPOS.Service.Interface;
+using RestaurantPOS.Interface;
 
 namespace RestaurantPOS.Controllers
 {
@@ -17,21 +17,21 @@ namespace RestaurantPOS.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async void GetAsync([FromRoute] int id)
+        public async Task<UserDto> GetAsync([FromRoute] Guid id)
         {
-            await _service.GetAsync(id);
+            return await _service.GetAsync(id);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async void DeleteAsync([FromRoute] int id)
+        public async Task DeleteAsync([FromRoute] Guid id)
         {
             await _service.DeleteAsync(id);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<UserDto> UpdateAsync([FromRoute] int id, [FromBody] UpdateUserDto input)
+        public async Task<UserDto> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserDto input)
         {
             return await _service.UpdateAsync(id, input);
         }

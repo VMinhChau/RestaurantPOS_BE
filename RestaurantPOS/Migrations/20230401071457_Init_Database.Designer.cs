@@ -12,8 +12,8 @@ using RestaurantPOS.Data;
 namespace RestaurantPOS.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    [Migration("20230331112543_User_Comment_Food")]
-    partial class User_Comment_Food
+    [Migration("20230401071457_Init_Database")]
+    partial class Init_Database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,54 +156,25 @@ namespace RestaurantPOS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Banner", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PaymentMethod")
+                    b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("BILL", (string)null);
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.BillDetail", b =>
-                {
-                    b.Property<Guid>("BillId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("BillId", "FoodId");
-
-                    b.HasIndex("FoodId");
-
-                    b.ToTable("BILL_DETAIL", (string)null);
+                    b.ToTable("BANNER", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Category", b =>
@@ -244,94 +215,35 @@ namespace RestaurantPOS.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("COMMENT", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Customer", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.FavoriteFood", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FoodId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("VIP")
-                        .HasColumnType("bit");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("CUSTOMER", (string)null);
+                    b.ToTable("FAVORITE_FOOD", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
@@ -376,71 +288,29 @@ namespace RestaurantPOS.Migrations
                     b.ToTable("FOOD", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderTable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("TableId");
-
-                    b.ToTable("ODER_TABLE", (string)null);
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Table", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("PeopleCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TABLE", (string)null);
-                });
-
             modelBuilder.Entity("RestaurantPOS.Data.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -449,13 +319,37 @@ namespace RestaurantPOS.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ImageLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Points")
                         .HasColumnType("float");
@@ -463,7 +357,25 @@ namespace RestaurantPOS.Migrations
                     b.Property<int>("Ranking")
                         .HasColumnType("int");
 
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("USER", (string)null);
                 });
@@ -479,7 +391,7 @@ namespace RestaurantPOS.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
+                    b.HasOne("RestaurantPOS.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -488,7 +400,7 @@ namespace RestaurantPOS.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
+                    b.HasOne("RestaurantPOS.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -503,7 +415,7 @@ namespace RestaurantPOS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
+                    b.HasOne("RestaurantPOS.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,41 +424,11 @@ namespace RestaurantPOS.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
+                    b.HasOne("RestaurantPOS.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", "Customer")
-                        .WithMany("Bills")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.BillDetail", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Bill", "Bill")
-                        .WithMany("BillDetails")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RestaurantPOS.Data.Entities.Food", "Food")
-                        .WithMany()
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bill");
-
-                    b.Navigation("Food");
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Comment", b =>
@@ -559,7 +441,7 @@ namespace RestaurantPOS.Migrations
 
                     b.HasOne("RestaurantPOS.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -575,50 +457,14 @@ namespace RestaurantPOS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderTable", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", "Customer")
-                        .WithMany("OrderTables")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RestaurantPOS.Data.Entities.Table", "Table")
-                        .WithMany("OrderTables")
-                        .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Table");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
-                {
-                    b.Navigation("BillDetails");
-                });
-
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Category", b =>
                 {
                     b.Navigation("Foods");
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Customer", b =>
-                {
-                    b.Navigation("Bills");
-
-                    b.Navigation("OrderTables");
-                });
-
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Table", b =>
-                {
-                    b.Navigation("OrderTables");
                 });
 #pragma warning restore 612, 618
         }

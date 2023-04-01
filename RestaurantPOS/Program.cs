@@ -7,7 +7,7 @@ using Microsoft.OpenApi.Models;
 using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Service;
-using RestaurantPOS.Service.Interface;
+using RestaurantPOS.Interface;
 
 namespace RestaurantPOS
 {
@@ -26,7 +26,7 @@ namespace RestaurantPOS
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
                         option.UseSqlServer(
                            connectString));
-            builder.Services.AddIdentity<Customer, IdentityRole<Guid>>()
+            builder.Services.AddIdentity<User, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<RestaurantDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -36,7 +36,6 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
-            builder.Services.AddTransient<ICRUDexample, CRUDexample>();
             builder.Services.AddTransient<IUserService, UserService>();
 
             var mapperConfig = new MapperConfiguration(mc =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RestaurantPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init_Database : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,23 +26,67 @@ namespace RestaurantPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CUSTOMER",
+                name: "BANNER",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BANNER", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CATEGORY",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CATEGORY", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FAVORITE_FOOD",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FoodId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FAVORITE_FOOD", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "USER",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    VIP = table.Column<bool>(type: "bit", nullable: false),
+                    Points = table.Column<double>(type: "float", nullable: false),
+                    Ranking = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -51,38 +95,7 @@ namespace RestaurantPOS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CUSTOMER", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FOOD",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    UnitPrice = table.Column<int>(type: "int", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "None."),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FOOD", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TABLE",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PeopleCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TABLE", x => x.Id);
+                    table.PrimaryKey("PK_USER", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,6 +120,30 @@ namespace RestaurantPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FOOD",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "None."),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AverageRating = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FOOD", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FOOD_CATEGORY_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "CATEGORY",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -120,9 +157,9 @@ namespace RestaurantPOS.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_CUSTOMER_UserId",
+                        name: "FK_AspNetUserClaims_USER_UserId",
                         column: x => x.UserId,
-                        principalTable: "CUSTOMER",
+                        principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -140,9 +177,9 @@ namespace RestaurantPOS.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_CUSTOMER_UserId",
+                        name: "FK_AspNetUserLogins_USER_UserId",
                         column: x => x.UserId,
-                        principalTable: "CUSTOMER",
+                        principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -164,9 +201,9 @@ namespace RestaurantPOS.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_CUSTOMER_UserId",
+                        name: "FK_AspNetUserRoles_USER_UserId",
                         column: x => x.UserId,
-                        principalTable: "CUSTOMER",
+                        principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -184,85 +221,38 @@ namespace RestaurantPOS.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_CUSTOMER_UserId",
+                        name: "FK_AspNetUserTokens_USER_UserId",
                         column: x => x.UserId,
-                        principalTable: "CUSTOMER",
+                        principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BILL",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Total = table.Column<int>(type: "int", nullable: false),
-                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BILL", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BILL_CUSTOMER_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "CUSTOMER",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ODER_TABLE",
+                name: "COMMENT",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TableId = table.Column<int>(type: "int", nullable: false),
-                    From = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    To = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FoodId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ODER_TABLE", x => x.Id);
+                    table.PrimaryKey("PK_COMMENT", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ODER_TABLE_CUSTOMER_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "CUSTOMER",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ODER_TABLE_TABLE_TableId",
-                        column: x => x.TableId,
-                        principalTable: "TABLE",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BILL_DETAIL",
-                columns: table => new
-                {
-                    BillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BILL_DETAIL", x => new { x.BillId, x.FoodId });
-                    table.ForeignKey(
-                        name: "FK_BILL_DETAIL_BILL_BillId",
-                        column: x => x.BillId,
-                        principalTable: "BILL",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BILL_DETAIL_FOOD_FoodId",
+                        name: "FK_COMMENT_FOOD_FoodId",
                         column: x => x.FoodId,
                         principalTable: "FOOD",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_COMMENT_USER_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -295,36 +285,31 @@ namespace RestaurantPOS.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BILL_CustomerId",
-                table: "BILL",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BILL_DETAIL_FoodId",
-                table: "BILL_DETAIL",
+                name: "IX_COMMENT_FoodId",
+                table: "COMMENT",
                 column: "FoodId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_COMMENT_UserId1",
+                table: "COMMENT",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FOOD_CategoryId",
+                table: "FOOD",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "CUSTOMER",
+                table: "USER",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "CUSTOMER",
+                table: "USER",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ODER_TABLE_CustomerId",
-                table: "ODER_TABLE",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ODER_TABLE_TableId",
-                table: "ODER_TABLE",
-                column: "TableId");
         }
 
         /// <inheritdoc />
@@ -346,25 +331,25 @@ namespace RestaurantPOS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BILL_DETAIL");
+                name: "BANNER");
 
             migrationBuilder.DropTable(
-                name: "ODER_TABLE");
+                name: "COMMENT");
+
+            migrationBuilder.DropTable(
+                name: "FAVORITE_FOOD");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "BILL");
-
-            migrationBuilder.DropTable(
                 name: "FOOD");
 
             migrationBuilder.DropTable(
-                name: "TABLE");
+                name: "USER");
 
             migrationBuilder.DropTable(
-                name: "CUSTOMER");
+                name: "CATEGORY");
         }
     }
 }
