@@ -237,6 +237,10 @@ namespace RestaurantPOS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("FAVORITE_FOOD", (string)null);
                 });
 
@@ -436,6 +440,21 @@ namespace RestaurantPOS.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.FavoriteFood", b =>
+                {
+                    b.HasOne("RestaurantPOS.Data.Entities.Food", null)
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantPOS.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>

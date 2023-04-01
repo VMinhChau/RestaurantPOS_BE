@@ -10,6 +10,16 @@ namespace RestaurantPOS.Data.Configurations
         {
             builder.ToTable("FAVORITE_FOOD");
             builder.HasKey(c => c.Id);
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            builder.HasOne<Food>()
+                .WithMany()
+                .HasForeignKey("FoodId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
         }
     }
 }
