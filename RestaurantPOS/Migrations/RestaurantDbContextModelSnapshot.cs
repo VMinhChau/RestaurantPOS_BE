@@ -161,7 +161,7 @@ namespace RestaurantPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("ImageLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -209,17 +209,14 @@ namespace RestaurantPOS.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId1")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("COMMENT", (string)null);
                 });
@@ -235,8 +232,8 @@ namespace RestaurantPOS.Migrations
                     b.Property<int>("FoodId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -251,10 +248,6 @@ namespace RestaurantPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AverageRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -265,7 +258,7 @@ namespace RestaurantPOS.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("None.");
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("ImageLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -438,7 +431,7 @@ namespace RestaurantPOS.Migrations
 
                     b.HasOne("RestaurantPOS.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

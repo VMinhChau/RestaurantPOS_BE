@@ -1,6 +1,8 @@
-﻿namespace RestaurantPOS.Data.Entities
+using RestaurantPOS.Dtos.Comment.Response;
+
+namespace RestaurantPOS.Dtos.Banner.Response
 {
-    public class Banner
+    public class BannerDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

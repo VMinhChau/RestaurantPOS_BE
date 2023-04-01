@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RestaurantPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class Init_Database : Migration
+    public partial class Create_Database : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace RestaurantPOS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,7 @@ namespace RestaurantPOS.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FoodId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -128,8 +128,7 @@ namespace RestaurantPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "None."),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AverageRating = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -236,8 +235,7 @@ namespace RestaurantPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FoodId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -250,8 +248,8 @@ namespace RestaurantPOS.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_COMMENT_USER_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_COMMENT_USER_UserId",
+                        column: x => x.UserId,
                         principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -290,9 +288,9 @@ namespace RestaurantPOS.Migrations
                 column: "FoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_COMMENT_UserId1",
+                name: "IX_COMMENT_UserId",
                 table: "COMMENT",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FOOD_CategoryId",
