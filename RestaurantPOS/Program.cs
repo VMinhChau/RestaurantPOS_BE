@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
@@ -22,11 +23,8 @@ namespace RestaurantPOS
             //Add db vs service in container
             var connectString = builder.Configuration.GetConnectionString("connect");
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
-                        option.UseSqlServer(
-                           connectString ));
-            builder.Services.AddIdentity<Customer, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<RestaurantDbContext>()
-                .AddDefaultTokenProviders();
+                        option.UseSqlServer(connectString)) ;
+
 
             builder.Services.AddControllers();
 
@@ -34,7 +32,7 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
-            builder.Services.AddTransient<ICRUDexample, CRUDexample>();
+            
 
             var app = builder.Build();
 

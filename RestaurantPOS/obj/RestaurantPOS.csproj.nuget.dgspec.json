@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\github\\RestaurantPOS_QLDAPM\\RestaurantPOS\\RestaurantPOS.csproj": {}
+    "D:\\github\\RestaurantPOS_BE\\RestaurantPOS\\RestaurantPOS.csproj": {}
   },
   "projects": {
-    "D:\\github\\RestaurantPOS_QLDAPM\\RestaurantPOS\\RestaurantPOS.csproj": {
+    "D:\\github\\RestaurantPOS_BE\\RestaurantPOS\\RestaurantPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\github\\RestaurantPOS_QLDAPM\\RestaurantPOS\\RestaurantPOS.csproj",
+        "projectUniqueName": "D:\\github\\RestaurantPOS_BE\\RestaurantPOS\\RestaurantPOS.csproj",
         "projectName": "RestaurantPOS",
-        "projectPath": "D:\\github\\RestaurantPOS_QLDAPM\\RestaurantPOS\\RestaurantPOS.csproj",
+        "projectPath": "D:\\github\\RestaurantPOS_BE\\RestaurantPOS\\RestaurantPOS.csproj",
         "packagesPath": "C:\\Users\\dinhd\\.nuget\\packages\\",
-        "outputPath": "D:\\github\\RestaurantPOS_QLDAPM\\RestaurantPOS\\obj\\",
+        "outputPath": "D:\\github\\RestaurantPOS_BE\\RestaurantPOS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dinhd\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,27 +40,27 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[7.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.1.4, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

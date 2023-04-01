@@ -1,6 +1,6 @@
-﻿namespace RestaurantPOS.Models
+﻿namespace RestaurantPOS.Models.Update
 {
-    public class TableViewModel
+    public class UpdateUserModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";

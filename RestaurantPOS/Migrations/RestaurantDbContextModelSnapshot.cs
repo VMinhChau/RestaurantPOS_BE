@@ -17,481 +17,414 @@ namespace RestaurantPOS.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("BILL", (string)null);
+                    b.ToTable("CATEGORY", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.BillDetail", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Comment", b =>
                 {
-                    b.Property<Guid>("BillId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int")
+                        .HasColumnName("foodId");
 
-                    b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
+                    b.Property<float>("Rating")
+                        .HasColumnType("real")
+                        .HasColumnName("rating");
 
-                    b.HasKey("BillId", "FoodId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("FoodId");
 
-                    b.ToTable("BILL_DETAIL", (string)null);
+                    b.HasIndex("UserId");
+
+                    b.ToTable("COMMENT", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Customer", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.FavoriteFood", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int")
+                        .HasColumnName("foodId");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("VIP")
-                        .HasColumnType("bit");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                    b.HasIndex("FoodId");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("CUSTOMER", (string)null);
+                    b.ToTable("FAVORITEFOOD", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("AverageRating")
+                        .HasColumnType("real")
+                        .HasColumnName("averageRating");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("categoryId");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("None.");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("description");
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("image");
+
+                    b.Property<bool>("IsPromote")
+                        .HasColumnType("bit")
+                        .HasColumnName("isPromote");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("name");
 
-                    b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal")
+                        .HasColumnName("price");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("FOOD", (string)null);
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderTable", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("AdminId")
+                        .HasColumnType("int")
+                        .HasColumnName("adminId");
 
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("TableId");
-
-                    b.ToTable("ODER_TABLE", (string)null);
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Table", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
+                    b.Property<string>("CreateAt")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("createAt");
 
-                    b.Property<int>("PeopleCount")
-                        .HasColumnType("int");
+                    b.Property<int?>("PurcharseId")
+                        .HasColumnType("int")
+                        .HasColumnName("purcharseId");
+
+                    b.Property<int>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("status");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real")
+                        .HasColumnName("totalPrice");
+
+                    b.Property<string>("UpdateAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("updateAt");
+
+                    b.Property<int?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("userId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TABLE", (string)null);
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ORDER", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderItem", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("CurrrentPrice")
+                        .HasColumnType("real")
+                        .HasColumnName("currrentPrice");
+
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int")
+                        .HasColumnName("foodId");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int")
+                        .HasColumnName("orderId");
+
+                    b.Property<int>("Quatity")
+                        .HasColumnType("int")
+                        .HasColumnName("quatity");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ORDERITEM", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.User", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("address");
+
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasColumnName("dateOfBirth");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("EncryptedPassword")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("encryptedPassword");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("firstName");
+
+                    b.Property<int>("Gender")
+                        .HasMaxLength(10)
+                        .HasColumnType("int")
+                        .HasColumnName("gender");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("lastName");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("phoneNumber");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int")
+                        .HasColumnName("points");
+
+                    b.Property<int>("Rank")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("rank");
+
+                    b.Property<int>("Role")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("role");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("USER", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Comment", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", "Customer")
-                        .WithMany("Bills")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.BillDetail", b =>
-                {
-                    b.HasOne("RestaurantPOS.Data.Entities.Bill", "Bill")
-                        .WithMany("BillDetails")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RestaurantPOS.Data.Entities.Food", "Food")
-                        .WithMany("BillDetails")
+                        .WithMany("Comments")
                         .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Bill");
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Food");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderTable", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.FavoriteFood", b =>
                 {
-                    b.HasOne("RestaurantPOS.Data.Entities.Customer", "Customer")
-                        .WithMany("OrderTables")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RestaurantPOS.Data.Entities.Food", "Food")
+                        .WithMany("FavoriteFoods")
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("RestaurantPOS.Data.Entities.Table", "Table")
-                        .WithMany("OrderTables")
-                        .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "User")
+                        .WithMany("FavoriteFoods")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Customer");
+                    b.Navigation("Food");
 
-                    b.Navigation("Table");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Bill", b =>
-                {
-                    b.Navigation("BillDetails");
-                });
-
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Customer", b =>
-                {
-                    b.Navigation("Bills");
-
-                    b.Navigation("OrderTables");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
                 {
-                    b.Navigation("BillDetails");
+                    b.HasOne("RestaurantPOS.Data.Entities.Category", "Category")
+                        .WithMany("Foods")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("RestaurantPOS.Data.Entities.Table", b =>
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
                 {
-                    b.Navigation("OrderTables");
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "UserAdmin")
+                        .WithMany("OrdersSecond")
+                        .HasForeignKey("AdminId");
+
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserAdmin");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderItem", b =>
+                {
+                    b.HasOne("RestaurantPOS.Data.Entities.Food", "Food")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("RestaurantPOS.Data.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Category", b =>
+                {
+                    b.Navigation("Foods");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("FavoriteFoods");
+
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.User", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("FavoriteFoods");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("OrdersSecond");
                 });
 #pragma warning restore 612, 618
         }
