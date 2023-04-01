@@ -9,5 +9,6 @@ namespace RestaurantPOS.Interface
         Task<UserDto> UpdateAsync(Guid id, UpdateUserDto input);
         Task DeleteAsync(Guid id);
         Task<UserDto> GetAsync(Guid id);
+        Task UploadImageAsync(Guid id, string path);
     }
 }
