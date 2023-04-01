@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RestaurantPOS.Data.Entities
+﻿namespace RestaurantPOS.Data.Entities
 {
     public class Food
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int UnitPrice { get; set; }
-        public string Category { get; set; }
+        public double Price { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-
-        public List<BillDetail> BillDetails { get; set; }
+        public string AverageRating { get; set; }
+        public int CategoryId { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
