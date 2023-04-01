@@ -41,5 +41,27 @@ namespace RestaurantPOS.Controllers
         {
             return await _service.CreateAsync(input);
         }
+
+        [HttpPost]
+        [Route("{id}/image")]
+        public async Task<IActionResult> UploadImage([FromRoute] Guid id, IFormFile file)
+        {
+            // Save the image file to the file system
+            var filename = Path.GetFileName(file.FileName);
+            var directory = Path.Combine("Content", $"Images\\{id}");
+            var path = Path.Combine(directory, filename);
+
+            // Create the directory if it does not exist
+            Directory.CreateDirectory(directory);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            await _service.UploadImageAsync(id, path);
+
+            return Ok("Image uploaded successfully.");
+        }
     }
 }

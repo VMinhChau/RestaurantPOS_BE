@@ -67,5 +67,13 @@ namespace RestaurantPOS.Service
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<UserDto>(entity);
         }
+
+        public async Task UploadImageAsync(Guid id, string path)
+        {
+            var entity = await _dbContext.User.FirstOrDefaultAsync(c => c.Id == id);
+
+            entity.ImageLink = path;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
