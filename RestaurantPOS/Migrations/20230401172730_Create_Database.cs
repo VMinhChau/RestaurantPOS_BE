@@ -53,20 +53,6 @@ namespace RestaurantPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FAVORITE_FOOD",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FAVORITE_FOOD", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "USER",
                 columns: table => new
                 {
@@ -255,6 +241,32 @@ namespace RestaurantPOS.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FAVORITE_FOOD",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FoodId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FAVORITE_FOOD", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FAVORITE_FOOD_FOOD_FoodId",
+                        column: x => x.FoodId,
+                        principalTable: "FOOD",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FAVORITE_FOOD_USER_UserId",
+                        column: x => x.UserId,
+                        principalTable: "USER",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -290,6 +302,16 @@ namespace RestaurantPOS.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_COMMENT_UserId",
                 table: "COMMENT",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FAVORITE_FOOD_FoodId",
+                table: "FAVORITE_FOOD",
+                column: "FoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FAVORITE_FOOD_UserId",
+                table: "FAVORITE_FOOD",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
