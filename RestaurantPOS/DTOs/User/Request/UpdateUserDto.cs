@@ -1,5 +1,3 @@
-using RestaurantPOS.Core.Enums;
-
 namespace RestaurantPOS.Dtos.User.Request
 {
     public class UpdateUserDto

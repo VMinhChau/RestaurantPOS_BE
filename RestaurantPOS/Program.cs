@@ -36,6 +36,12 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
+
+            builder.Services.AddTransient<IBannerService, BannerService>();
+            builder.Services.AddTransient<IFavoriteFoodService, FavoriteFoodService>();
+            builder.Services.AddTransient<ICommentService, CommentService>();
+            builder.Services.AddTransient<ICategoryService, CategoryService>();
+            builder.Services.AddTransient<IFoodService, FoodService>();
             builder.Services.AddTransient<IUserService, UserService>();
 
             var mapperConfig = new MapperConfiguration(mc =>

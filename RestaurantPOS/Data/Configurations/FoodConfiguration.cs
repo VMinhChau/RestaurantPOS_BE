@@ -12,7 +12,7 @@ namespace RestaurantPOS.Data.Configurations
             builder.HasKey(f => f.Id);
             builder.Property(f => f.Name).HasMaxLength(200).IsUnicode().IsRequired();
             builder.Property(f => f.Description).IsUnicode().HasDefaultValue("None.");
-            builder.Property(f => f.ImageURL).IsRequired();
+            builder.Property(f => f.ImageLink).IsRequired();
         }
     }
 }
