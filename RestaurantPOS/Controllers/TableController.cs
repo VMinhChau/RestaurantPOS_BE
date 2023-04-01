@@ -20,14 +20,14 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TableViewModel>> GetAllTable() {
-            return await _cRUDexample.GetAllTableAsync();
+        public async Task<TableViewModel?> GetAllTable(int id) {
+            return await _cRUDexample.GetAllTableAsync(id);
         }
 
         [HttpDelete]
-        public async void DeleteTable(int id)
+        public void DeleteTable(int id)
         {
-            await _cRUDexample.DeleteTablAsync(id);
+            _cRUDexample.DeleteTable(id);
         }
 
         [HttpPut]

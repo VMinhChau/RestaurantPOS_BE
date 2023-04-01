@@ -40,25 +40,26 @@ namespace RestaurantPOS.Service
             return tableDB;
         }
 
-        public async Task DeleteTablAsync(int id)
+        public void DeleteTable(int id)
         {
-            var tableDB = await _dbContext.Table.FirstOrDefaultAsync(c => c.Id == id);
+            var tableDB = _dbContext.Table.FirstOrDefault(c => c.Id == id);
             if (tableDB == null)
             {
                 return;
             }
             _dbContext.Table.Remove(tableDB);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             return;
         }
 
-        public async Task<IEnumerable<TableViewModel>> GetAllTableAsync()
+        public async Task<TableViewModel?> GetAllTableAsync(int id)
         {
+            var tableDB = _dbContext.Table.FirstOrDefault(c => c.Id == id);
             return await _dbContext.Table.Select(c=>new TableViewModel(){
                 Name = c.Name,
                 PeopleCount = c.PeopleCount,
                 Id= c.Id
-            }).ToListAsync();
+            }).FirstOrDefaultAsync(c=>c.Id==id);
         }
     }
 }

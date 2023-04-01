@@ -10,7 +10,7 @@ namespace RestaurantPOS.Service.Interface
     {
         Task<Table> CreateTableAsync(CreateTableModel input);
         Task<Table?> UpdateTableAsync(UpdateTableModel input);
-        Task DeleteTablAsync(int id);
-        Task<IEnumerable<TableViewModel>> GetAllTableAsync();
+        void DeleteTable(int id);
+        Task<TableViewModel?> GetAllTableAsync(int id);
     }
 }
