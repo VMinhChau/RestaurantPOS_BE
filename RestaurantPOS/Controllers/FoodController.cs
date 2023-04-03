@@ -23,6 +23,13 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpGet]
+        [Route("suggest/{id}")]
+        public async Task<List<FoodDto>> GetSuggestAsync([FromRoute] int id)
+        {
+            return await _service.GetSuggestAsync(id);
+        }
+
+        [HttpGet]
         [Route("favorite-foods/{userId}")]
         public async Task<List<FoodDto>> GetAsync([FromRoute] Guid userId)
         {
@@ -33,6 +40,13 @@ namespace RestaurantPOS.Controllers
         public async Task<List<FoodDto>> GetAsync()
         {
             return await _service.GetAsync();
+        }
+
+        [HttpGet]
+        [Route("promote_foods")]
+        public async Task<List<FoodDto>> GetPromotionAsync()
+        {
+            return await _service.GetPromotionAsync();
         }
 
         [HttpDelete]
