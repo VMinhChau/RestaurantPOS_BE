@@ -12,8 +12,8 @@ using RestaurantPOS.Data;
 namespace RestaurantPOS.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    [Migration("20230401071457_Init_Database")]
-    partial class Init_Database
+    [Migration("20230401151726_db")]
+    partial class db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,6 +288,100 @@ namespace RestaurantPOS.Migrations
                     b.ToTable("FOOD", (string)null);
                 });
 
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("adminId");
+
+                    b.Property<string>("CreateAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("createAt");
+
+                    b.Property<int?>("PurcharseId")
+                        .HasColumnType("int")
+                        .HasColumnName("purcharseId");
+
+                    b.Property<int>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("status");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real")
+                        .HasColumnName("totalPrice");
+
+                    b.Property<string>("UpdateAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("updateAt");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("userId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ORDER", (string)null);
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("CurrrentPrice")
+                        .HasColumnType("real")
+                        .HasColumnName("currrentPrice");
+
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int")
+                        .HasColumnName("foodId");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int")
+                        .HasColumnName("orderId");
+
+                    b.Property<int>("OrderItem-Food")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderItem-Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quatity")
+                        .HasColumnType("int")
+                        .HasColumnName("quatity");
+
+                    b.Property<int>("Status")
+                        .HasMaxLength(100)
+                        .HasColumnType("int")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ORDERITEM", (string)null);
+                });
+
             modelBuilder.Entity("RestaurantPOS.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -457,6 +551,42 @@ namespace RestaurantPOS.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
+                {
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "Admin")
+                        .WithMany("OrdersAdmin")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantPOS.Data.Entities.User", "User")
+                        .WithMany("OrdersUser")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.OrderItem", b =>
+                {
+                    b.HasOne("RestaurantPOS.Data.Entities.Food", "Food")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("RestaurantPOS.Data.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Category", b =>
                 {
                     b.Navigation("Foods");
@@ -465,6 +595,20 @@ namespace RestaurantPOS.Migrations
             modelBuilder.Entity("RestaurantPOS.Data.Entities.Food", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantPOS.Data.Entities.User", b =>
+                {
+                    b.Navigation("OrdersAdmin");
+
+                    b.Navigation("OrdersUser");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,6 +21,9 @@ namespace RestaurantPOS.Data
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
             modelBuilder.ApplyConfiguration(new FavoriteFoodConfiguration());
             modelBuilder.ApplyConfiguration(new BannerConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+
         }
 
         public DbSet<Food> Food { get; set; }
@@ -29,5 +32,7 @@ namespace RestaurantPOS.Data
         public DbSet<Comment> Comment { get; set; }
         public DbSet<FavoriteFood> FavoriteFood { get; set; }
         public DbSet<Banner> Banner { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }

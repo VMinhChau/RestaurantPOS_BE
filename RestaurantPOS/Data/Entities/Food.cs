@@ -10,5 +10,6 @@
         public string AverageRating { get; set; }
         public int CategoryId { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }

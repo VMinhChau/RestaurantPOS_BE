@@ -1,6 +1,4 @@
 
-using AutoMapper;
-using AutoMapper.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -25,7 +23,7 @@ namespace RestaurantPOS
             var connectString = builder.Configuration.GetConnectionString("connect");
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
                         option.UseSqlServer(
-                           connectString));
+                           connectString),ServiceLifetime.Transient);
             builder.Services.AddIdentity<User, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<RestaurantDbContext>()
                 .AddDefaultTokenProviders();
@@ -36,15 +34,19 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
-            builder.Services.AddTransient<IUserService, UserService>();
 
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new AutoMapperProfile());
-            });
+            builder.Services.AddScoped<IUserService, UserService>()
+                            .AddScoped<IOrderService,OrderService>()
+                            .AddScoped<IOrderItemService,OrderItemService>();
 
-            IMapper mapper = mapperConfig.CreateMapper();
-            builder.Services.AddSingleton(mapper);
+            //var mapperConfig = new MapperConfiguration(mc =>
+            //{
+            //    mc.AddProfile(new AutoMapperProfile());
+            //});
+
+            //IMapper mapper = mapperConfig.CreateMapper();
+            //builder.Services.AddSingleton(mapper);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RestaurantPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class Init_Database : Migration
+    public partial class db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -229,6 +229,35 @@ namespace RestaurantPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ORDER",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    adminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    status = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    totalPrice = table.Column<float>(type: "real", nullable: false),
+                    purcharseId = table.Column<int>(type: "int", nullable: true),
+                    createAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    updateAt = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ORDER", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ORDER_USER_adminId",
+                        column: x => x.adminId,
+                        principalTable: "USER",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ORDER_USER_userId",
+                        column: x => x.userId,
+                        principalTable: "USER",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "COMMENT",
                 columns: table => new
                 {
@@ -255,6 +284,37 @@ namespace RestaurantPOS.Migrations
                         principalTable: "USER",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ORDERITEM",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    orderId = table.Column<int>(type: "int", nullable: true),
+                    currrentPrice = table.Column<float>(type: "real", nullable: false),
+                    quatity = table.Column<int>(type: "int", nullable: false),
+                    foodId = table.Column<int>(type: "int", nullable: true),
+                    status = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    OrderItemFood = table.Column<int>(name: "OrderItem-Food", type: "int", nullable: false),
+                    OrderItemOrder = table.Column<int>(name: "OrderItem-Order", type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ORDERITEM", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ORDERITEM_FOOD_foodId",
+                        column: x => x.foodId,
+                        principalTable: "FOOD",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_ORDERITEM_ORDER_orderId",
+                        column: x => x.orderId,
+                        principalTable: "ORDER",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
@@ -300,6 +360,26 @@ namespace RestaurantPOS.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ORDER_adminId",
+                table: "ORDER",
+                column: "adminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ORDER_userId",
+                table: "ORDER",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ORDERITEM_foodId",
+                table: "ORDERITEM",
+                column: "foodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ORDERITEM_orderId",
+                table: "ORDERITEM",
+                column: "orderId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "USER",
                 column: "NormalizedEmail");
@@ -340,16 +420,22 @@ namespace RestaurantPOS.Migrations
                 name: "FAVORITE_FOOD");
 
             migrationBuilder.DropTable(
+                name: "ORDERITEM");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "FOOD");
 
             migrationBuilder.DropTable(
-                name: "USER");
+                name: "ORDER");
 
             migrationBuilder.DropTable(
                 name: "CATEGORY");
+
+            migrationBuilder.DropTable(
+                name: "USER");
         }
     }
 }
