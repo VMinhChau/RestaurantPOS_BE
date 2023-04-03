@@ -1,6 +1,4 @@
 
-using AutoMapper;
-using AutoMapper.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -8,6 +6,9 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Service;
 using RestaurantPOS.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace RestaurantPOS
 {
@@ -25,7 +26,7 @@ namespace RestaurantPOS
             var connectString = builder.Configuration.GetConnectionString("connect");
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
                         option.UseSqlServer(
-                           connectString));
+                           connectString),ServiceLifetime.Transient);
             builder.Services.AddIdentity<User, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<RestaurantDbContext>()
                 .AddDefaultTokenProviders();
@@ -36,7 +37,6 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
-
             builder.Services.AddTransient<IBannerService, BannerService>();
             builder.Services.AddTransient<IFavoriteFoodService, FavoriteFoodService>();
             builder.Services.AddTransient<ICommentService, CommentService>();
@@ -44,13 +44,33 @@ namespace RestaurantPOS
             builder.Services.AddTransient<IFoodService, FoodService>();
             builder.Services.AddTransient<IUserService, UserService>();
 
-            var mapperConfig = new MapperConfiguration(mc =>
+            
+            builder.Services.AddScoped<IOrderService,OrderService>()
+                            .AddScoped<IOrderItemService,OrderItemService>();
+            //Mapper
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //JWT
+            builder.Services.AddAuthentication(x =>
             {
-                mc.AddProfile(new AutoMapperProfile());
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+                o.SaveToken = true;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Key)
+                };
             });
 
-            IMapper mapper = mapperConfig.CreateMapper();
-            builder.Services.AddSingleton(mapper);
 
             var app = builder.Build();
 
@@ -62,6 +82,8 @@ namespace RestaurantPOS
                 app.UseHsts();
             }
 
+            app.UseAuthentication(); // This need to be added	
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
