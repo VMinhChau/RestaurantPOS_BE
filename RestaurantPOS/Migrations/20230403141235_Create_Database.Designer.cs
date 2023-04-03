@@ -12,7 +12,7 @@ using RestaurantPOS.Data;
 namespace RestaurantPOS.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    [Migration("20230401172730_Create_Database")]
+    [Migration("20230403141235_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -268,6 +268,9 @@ namespace RestaurantPOS.Migrations
                     b.Property<string>("ImageLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPromotion")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -9,7 +9,9 @@ namespace RestaurantPOS.Interface
         Task<FoodDto> UpdateAsync(int id, UpdateFoodDto input);
         Task DeleteAsync(int id);
         Task<FoodDto> GetAsync(int id);
+        Task<List<FoodDto>> GetSuggestAsync(int id);
         Task<List<FoodDto>> GetAsync();
+        Task<List<FoodDto>> GetPromotionAsync();
         Task<List<FoodDto>> GetAsync(Guid userId);
         Task UploadImageAsync(int id, string path);
     }
