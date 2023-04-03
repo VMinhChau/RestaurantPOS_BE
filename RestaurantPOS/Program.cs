@@ -6,6 +6,9 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Service;
 using RestaurantPOS.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace RestaurantPOS
 {
@@ -38,15 +41,30 @@ namespace RestaurantPOS
             builder.Services.AddScoped<IUserService, UserService>()
                             .AddScoped<IOrderService,OrderService>()
                             .AddScoped<IOrderItemService,OrderItemService>();
-
-            //var mapperConfig = new MapperConfiguration(mc =>
-            //{
-            //    mc.AddProfile(new AutoMapperProfile());
-            //});
-
-            //IMapper mapper = mapperConfig.CreateMapper();
-            //builder.Services.AddSingleton(mapper);
+            //Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //JWT
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+                o.SaveToken = true;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Key)
+                };
+            });
+
 
             var app = builder.Build();
 
@@ -58,6 +76,8 @@ namespace RestaurantPOS
                 app.UseHsts();
             }
 
+            app.UseAuthentication(); // This need to be added	
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
