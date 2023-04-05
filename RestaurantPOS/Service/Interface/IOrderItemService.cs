@@ -2,7 +2,7 @@
 using RestaurantPOS.DTOs.OrderItem.Response;
 using System.Transactions;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface IOrderItemService
     {

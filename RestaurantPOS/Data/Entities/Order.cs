@@ -24,7 +24,7 @@ namespace RestaurantPOS.Data.Entities
         [ForeignKey(nameof(AdminId))]
         [InverseProperty("admin-order")]
         [Column(name: "adminId")]
-        public Guid AdminId { get; set; }
+        public Guid? AdminId { get; set; }
         public  User Admin { get; set; }
 
         [Column(name: "status")]

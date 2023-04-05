@@ -1,7 +1,7 @@
 ﻿using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface IOrderService
     {

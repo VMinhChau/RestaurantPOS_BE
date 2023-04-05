@@ -1,7 +1,7 @@
 ﻿using RestaurantPOS.Dtos.Banner.Request;
 using RestaurantPOS.Dtos.Banner.Response;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface IBannerService
     {

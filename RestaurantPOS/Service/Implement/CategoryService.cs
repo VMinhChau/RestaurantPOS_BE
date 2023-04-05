@@ -4,9 +4,9 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Dtos.Category.Request;
 using RestaurantPOS.Dtos.Category.Response;
-using RestaurantPOS.Interface;
+using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class CategoryService : ICategoryService
     {

@@ -1,7 +1,7 @@
 ﻿using RestaurantPOS.Dtos.Comment.Request;
 using RestaurantPOS.Dtos.Comment.Response;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface ICommentService
     {

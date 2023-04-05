@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
-using RestaurantPOS.Interface;
+using RestaurantPOS.Service.Interface;
 
 namespace RestaurantPOS.Controllers
 {

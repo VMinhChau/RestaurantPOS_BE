@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Service;
-using RestaurantPOS.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using RestaurantPOS.Service.Interface;
+using RestaurantPOS.Service.Implement;
 
 namespace RestaurantPOS
 {
@@ -27,9 +27,6 @@ namespace RestaurantPOS
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
                         option.UseSqlServer(
                            connectString),ServiceLifetime.Transient);
-            builder.Services.AddIdentity<User, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<RestaurantDbContext>()
-                .AddDefaultTokenProviders();
 
             builder.Services.AddControllers();
 
@@ -37,15 +34,15 @@ namespace RestaurantPOS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant API", Version = "v1" });
             });
-            builder.Services.AddTransient<IBannerService, BannerService>();
-            builder.Services.AddTransient<IFavoriteFoodService, FavoriteFoodService>();
-            builder.Services.AddTransient<ICommentService, CommentService>();
-            builder.Services.AddTransient<ICategoryService, CategoryService>();
-            builder.Services.AddTransient<IFoodService, FoodService>();
-            builder.Services.AddTransient<IUserService, UserService>();
 
-            
-            builder.Services.AddScoped<IOrderService,OrderService>()
+            //Service
+            builder.Services.AddScoped<IBannerService, BannerService>()
+                            .AddScoped<IFavoriteFoodService, FavoriteFoodService>()
+                            .AddScoped<ICommentService, CommentService>()
+                            .AddScoped<ICategoryService, CategoryService>()
+                            .AddScoped<IFoodService, FoodService>()
+                            .AddScoped<IUserService, UserService>()
+                            .AddScoped<IOrderService,OrderService>()
                             .AddScoped<IOrderItemService,OrderItemService>();
             //Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
