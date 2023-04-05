@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using RestaurantPOS.Core.Enums;
+using RestaurantPOS.Common;
 using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Dtos.User.Request;
@@ -21,22 +21,16 @@ namespace RestaurantPOS.Service.Implement
 
         public async Task<UserDto> CreateAsync(CreateUserDto input)
         {
-            var entity = new User()
+            try
             {
-                LastName = input.LastName,
-                FirstName = input.FirstName,
-                Birthday = input.Birthday,
-                Email = input.Email,
-                Gender = input.Gender,
-                PhoneNumber = input.PhoneNumber,
-                Points = 0,
-                Ranking = RankUser.Bronze,
-                ImageLink = ""
-            };
-            await _dbContext.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+                var entity = _mapper.Map<User>(input);
+                entity.PasswordHash = Utils.HashPasswords(entity.PasswordHash);
+                await _dbContext.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
 
-            return _mapper.Map<UserDto>(entity);
+                return _mapper.Map<UserDto>(entity);
+            }
+            catch (Exception ex) { return new UserDto(); }
         }
 
         public async Task DeleteAsync(Guid id)

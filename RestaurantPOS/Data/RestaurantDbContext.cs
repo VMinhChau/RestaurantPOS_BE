@@ -6,7 +6,7 @@ using RestaurantPOS.Data.Entities;
 
 namespace RestaurantPOS.Data
 {
-    public class RestaurantDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class RestaurantDbContext:DbContext
     {
         public RestaurantDbContext(DbContextOptions<RestaurantDbContext> options): base(options)
         {

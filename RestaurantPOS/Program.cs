@@ -26,7 +26,7 @@ namespace RestaurantPOS
             var connectString = builder.Configuration.GetConnectionString("connect");
             builder.Services.AddDbContext<RestaurantDbContext>(option =>
                         option.UseSqlServer(
-                           connectString),ServiceLifetime.Transient);
+                           connectString));
 
             builder.Services.AddControllers();
 

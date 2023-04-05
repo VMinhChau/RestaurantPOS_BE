@@ -5,6 +5,7 @@ using RestaurantPOS.Dtos.Category.Response;
 using RestaurantPOS.Dtos.Comment.Response;
 using RestaurantPOS.Dtos.FavoriteFood.Response;
 using RestaurantPOS.Dtos.Food.Response;
+using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
 using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
@@ -18,6 +19,8 @@ namespace RestaurantPOS
         public AutoMapperProfile()
         {
             #region User
+            CreateMap<User, UserDto>();
+            CreateMap<CreateUserDto, User>();
             #endregion
 
             #region Food

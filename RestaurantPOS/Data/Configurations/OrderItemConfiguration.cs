@@ -17,12 +17,12 @@ namespace RestaurantPOS.Data.Configurations
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(o => o.OrderId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(o => o.Food)
                 .WithMany(f => f.OrderItems)
                 .HasForeignKey(o => o.FoodId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
