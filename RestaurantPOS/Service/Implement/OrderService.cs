@@ -4,15 +4,15 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
-using RestaurantPOS.Interface;
+using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class OrderService : IOrderService
     {
         private readonly RestaurantDbContext _dbContext;
         private readonly IMapper _mapper;
-        public OrderService(RestaurantDbContext dbContext,IMapper mapper)
+        public OrderService(RestaurantDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace RestaurantPOS.Service
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
 
@@ -46,7 +46,7 @@ namespace RestaurantPOS.Service
             {
                 try
                 {
-                    var order = await _dbContext.Orders.FirstOrDefaultAsync(c=>c.Id == id);
+                    var order = await _dbContext.Orders.FirstOrDefaultAsync(c => c.Id == id);
                     if (order != null)
                     {
                         var orderItemsDb = await _dbContext.OrderItems.Where(c => c.OrderId == id).ToArrayAsync();
@@ -59,7 +59,7 @@ namespace RestaurantPOS.Service
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
         }
@@ -67,8 +67,8 @@ namespace RestaurantPOS.Service
         public async Task<IEnumerable<OrderDto>> GetOrdersAsync(Guid userId)
         {
             return await _dbContext.Orders
-                .Where(c=> c.UserId == userId)
-                .Select(c=>_mapper.Map<OrderDto>(c))
+                .Where(c => c.UserId == userId)
+                .Select(c => _mapper.Map<OrderDto>(c))
                 .ToListAsync();
         }
 
@@ -81,22 +81,22 @@ namespace RestaurantPOS.Service
                     var orderDb = await _dbContext.Orders.FirstOrDefaultAsync(c => c.Id == updateOrder.Id);
                     if (orderDb != null)
                     {
-                        orderDb.PurcharseId= updateOrder.PurcharseId;
-                        orderDb.Status=updateOrder.Status??orderDb.Status;
-                        orderDb.AdminId=updateOrder.AdminId??orderDb.AdminId;
+                        orderDb.PurcharseId = updateOrder.PurcharseId;
+                        orderDb.Status = updateOrder.Status ?? orderDb.Status;
+                        orderDb.AdminId = updateOrder.AdminId ?? orderDb.AdminId;
                         orderDb.UserId = updateOrder.UserId ?? orderDb.UserId;
-                        orderDb.UpdateAt=DateTime.Now.ToUniversalTime();
+                        orderDb.UpdateAt = DateTime.Now.ToUniversalTime();
                         _dbContext.Orders.Update(orderDb);
                         _dbContext.SaveChanges();
                         tr.Commit();
                         return _mapper.Map<OrderDto>(orderDb);
                     }
-                    throw (new Exception($"Not find order with id:{updateOrder.Id}"));
+                    throw new Exception($"Not find order with id:{updateOrder.Id}");
                 }
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
         }

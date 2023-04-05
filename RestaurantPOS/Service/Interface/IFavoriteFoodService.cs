@@ -1,7 +1,7 @@
 using RestaurantPOS.Dtos.FavoriteFood.Request;
 using RestaurantPOS.Dtos.FavoriteFood.Response;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface IFavoriteFoodService
     {

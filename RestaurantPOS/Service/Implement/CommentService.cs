@@ -6,7 +6,7 @@ using RestaurantPOS.Dtos.Comment.Request;
 using RestaurantPOS.Dtos.Comment.Response;
 using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class CommentService : ICommentService
     {

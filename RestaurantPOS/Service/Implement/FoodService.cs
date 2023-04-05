@@ -6,7 +6,7 @@ using RestaurantPOS.Dtos.Food.Request;
 using RestaurantPOS.Dtos.Food.Response;
 using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class FoodService : IFoodService
     {
@@ -26,6 +26,7 @@ namespace RestaurantPOS.Service
             {
                 Name = input.Name,
                 Price = input.Price,
+                IsPromotion = input.IsPromotion,
                 CategoryId = input.CategoryId,
                 Description = input.Description,
                 Comments = new List<Comment>(),
@@ -54,11 +55,36 @@ namespace RestaurantPOS.Service
             return _mapper.Map<FoodDto>(entity);
         }
 
+        public async Task<List<FoodDto>> GetSuggestAsync(int id)
+        {
+            var food = await GetAsync(id);
+            var entity = await _dbContext.Food
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
+                .Where(p => p.CategoryId != food!.CategoryId)
+                .GroupBy(p => p.CategoryId)
+                .Select(g => g.FirstOrDefault())
+                .ToListAsync();
+
+            return _mapper.Map<List<FoodDto>>(entity);
+        }
+
         public async Task<List<FoodDto>> GetAsync()
         {
             var entity = await _dbContext.Food
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
+                .ToListAsync();
+
+            return _mapper.Map<List<FoodDto>>(entity);
+        }
+
+        public async Task<List<FoodDto>> GetPromotionAsync()
+        {
+            var entity = await _dbContext.Food
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
+                .Where(x => x.IsPromotion)
                 .ToListAsync();
 
             return _mapper.Map<List<FoodDto>>(entity);
@@ -78,22 +104,13 @@ namespace RestaurantPOS.Service
             return _mapper.Map<List<FoodDto>>(entity);
         }
 
-        public Task<List<FoodDto>> GetPromotionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<FoodDto>> GetSuggestAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<FoodDto> UpdateAsync(int id, UpdateFoodDto input)
         {
             var entity = await _dbContext.Food.FirstOrDefaultAsync(c => c.Id == id);
 
             entity.Name = input.Name;
             entity.Price = input.Price;
+            entity.IsPromotion = input.IsPromotion;
             entity.CategoryId = input.CategoryId;
             entity.Description = input.Description;
 

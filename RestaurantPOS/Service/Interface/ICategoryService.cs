@@ -1,7 +1,7 @@
 ﻿using RestaurantPOS.Dtos.Category.Request;
 using RestaurantPOS.Dtos.Category.Response;
 
-namespace RestaurantPOS.Interface
+namespace RestaurantPOS.Service.Interface
 {
     public interface ICategoryService
     {

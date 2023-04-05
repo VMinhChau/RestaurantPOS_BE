@@ -4,15 +4,15 @@ using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.DTOs.OrderItem.Request;
 using RestaurantPOS.DTOs.OrderItem.Response;
-using RestaurantPOS.Interface;
+using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class OrderItemService : IOrderItemService
     {
         private readonly RestaurantDbContext _dbContext;
         private readonly IMapper _mapper;
-        public OrderItemService(RestaurantDbContext dbContext,IMapper mapper)
+        public OrderItemService(RestaurantDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -25,8 +25,8 @@ namespace RestaurantPOS.Service
                 try
                 {
                     var currentPrice = (float)await _dbContext.Food.Where(c => c.Id == createOrderItem.FoodId).Select(c => c.Price).FirstOrDefaultAsync();
-                    var orderItem=await _dbContext.OrderItems.Where(c=>c.FoodId==createOrderItem.FoodId && c.OrderId==createOrderItem.OrderId).FirstOrDefaultAsync();
-                    if(orderItem!=null)
+                    var orderItem = await _dbContext.OrderItems.Where(c => c.FoodId == createOrderItem.FoodId && c.OrderId == createOrderItem.OrderId).FirstOrDefaultAsync();
+                    if (orderItem != null)
                     {
                         orderItem.Quatity += createOrderItem.Quatity;
                         _dbContext.OrderItems.Update(orderItem);
@@ -46,7 +46,7 @@ namespace RestaurantPOS.Service
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace RestaurantPOS.Service
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace RestaurantPOS.Service
                 catch (Exception ex)
                 {
                     tr.Rollback();
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace RestaurantPOS.Service
                 }
                 catch (Exception ex)
                 {
-                    throw (new Exception(ex.Message));
+                    throw new Exception(ex.Message);
                 }
         }
         private async Task UpdateTotalPriceAsync(int orderId)

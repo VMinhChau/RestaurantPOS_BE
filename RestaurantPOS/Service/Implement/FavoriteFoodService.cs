@@ -6,7 +6,7 @@ using RestaurantPOS.Dtos.FavoriteFood.Request;
 using RestaurantPOS.Dtos.FavoriteFood.Response;
 using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class FavoriteFoodService : IFavoriteFoodService
     {

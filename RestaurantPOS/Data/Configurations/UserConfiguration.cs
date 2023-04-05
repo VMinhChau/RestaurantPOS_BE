@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestaurantPOS.Data.Entities;
 
 namespace RestaurantPOS.Data.Configurations
@@ -10,6 +11,7 @@ namespace RestaurantPOS.Data.Configurations
         {
             builder.ToTable("USER");
             builder.HasKey(f => f.Id);
+            builder.HasIndex(f=>f.UserName).IsUnique();
         }
     }
 }

@@ -6,7 +6,7 @@ using RestaurantPOS.Dtos.Category.Request;
 using RestaurantPOS.Dtos.Category.Response;
 using RestaurantPOS.Service.Interface;
 
-namespace RestaurantPOS.Service.Service
+namespace RestaurantPOS.Service.Implement
 {
     public class CategoryService : ICategoryService
     {

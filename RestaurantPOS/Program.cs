@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RestaurantPOS.Data;
 using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Service;
-using RestaurantPOS.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using RestaurantPOS.Service.Interface;
+using RestaurantPOS.Service.Implement;
 
 namespace RestaurantPOS
 {
@@ -44,9 +44,10 @@ namespace RestaurantPOS
             builder.Services.AddTransient<IFoodService, FoodService>();
             builder.Services.AddTransient<IUserService, UserService>();
 
-            
-            builder.Services.AddScoped<IOrderService,OrderService>()
-                            .AddScoped<IOrderItemService,OrderItemService>();
+
+            builder.Services.AddScoped<IOrderService, OrderService>()
+                            .AddScoped<IOrderItemService, OrderItemService>()
+                            .AddScoped<IAuthorizeService, AuthorizeService>();
             //Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -65,6 +66,7 @@ namespace RestaurantPOS
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+                    RequireExpirationTime= true,
                     ValidIssuer = builder.Configuration["JWT:Issuer"],
                     ValidAudience = builder.Configuration["JWT:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Key)
