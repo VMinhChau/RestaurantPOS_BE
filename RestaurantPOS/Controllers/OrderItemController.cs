@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantPOS.DTOs.OrderItem.Request;
 using RestaurantPOS.DTOs.OrderItem.Response;
 using RestaurantPOS.Service.Interface;
@@ -7,6 +8,7 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderItemController : ControllerBase
     {
         private readonly IOrderItemService _orderItemService;
