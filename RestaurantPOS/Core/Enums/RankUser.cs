@@ -2,8 +2,8 @@ namespace RestaurantPOS.Core.Enums
 {
     public enum RankUser
     {
-        Gold,
+        Bronze,
         Silver,
-        Bronze
+        Gold
     }
 }

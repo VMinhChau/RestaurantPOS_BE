@@ -2,11 +2,13 @@
 using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
 using RestaurantPOS.Service.Interface;
+using System.Web.Http;
 
 namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;

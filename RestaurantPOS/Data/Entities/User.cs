@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using RestaurantPOS.Core.Enums;
+using static RestaurantPOS.Common.EnumCommon;
 
 namespace RestaurantPOS.Data.Entities
 {
@@ -15,8 +16,9 @@ namespace RestaurantPOS.Data.Entities
         public string ImageLink { get; set; }
         public bool Gender { get; set; }
         public DateTime Birthday { get; set; }
-        public double? Points { get; set; }
-        public RankUser? Ranking { get; set; }
+        public double Points { get; set; }
+        public RankUser Ranking { get; set; }
+        public Role Role { get; set; }
 
         public ICollection<Order> OrdersUser { get; set; }
         public ICollection<Order> OrdersAdmin { get; set; }

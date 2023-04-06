@@ -1,14 +1,11 @@
-
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using RestaurantPOS.Service.Interface;
 using RestaurantPOS.Service.Implement;
+using RestaurantPOS.Service.Interface;
+using System.Text;
 
 namespace RestaurantPOS
 {
@@ -42,8 +39,9 @@ namespace RestaurantPOS
                             .AddScoped<ICategoryService, CategoryService>()
                             .AddScoped<IFoodService, FoodService>()
                             .AddScoped<IUserService, UserService>()
-                            .AddScoped<IOrderService,OrderService>()
-                            .AddScoped<IOrderItemService,OrderItemService>();
+                            .AddScoped<IOrderService, OrderService>()
+                            .AddScoped<IOrderItemService, OrderItemService>();
+            builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
             //Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -68,6 +66,13 @@ namespace RestaurantPOS
                 };
             });
 
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.RequireClaim("IsAdmin"));
+            });
 
             var app = builder.Build();
 
@@ -79,17 +84,21 @@ namespace RestaurantPOS
                 app.UseHsts();
             }
 
-            app.UseAuthentication(); // This need to be added	
-            app.UseAuthorization();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            
+            app.UseAuthentication(); // This need to be added	
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
