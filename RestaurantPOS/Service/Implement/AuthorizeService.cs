@@ -33,15 +33,16 @@ namespace RestaurantPOS.Service.Implement
                 var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
 
                 var role = new Claim(ClaimTypes.Role, "IsUser");
+                var clam = new Claim("IsAdmin", "false");
                 if (user.Role == EnumCommon.Role.Admin)
                 {
                     role = new Claim(ClaimTypes.Role, "IsAdmin");
+                    clam = new Claim("IsAdmin", "true");
                 }
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                               {
-                                new Claim("UserName", userName),
                                 new Claim("Id", user.Id.ToString()),
                                 new Claim("Name", user.FirstName+" "+user.LastName),
                                 new Claim("Email", user.Email),
@@ -49,7 +50,8 @@ namespace RestaurantPOS.Service.Implement
                                 new Claim("Point", user.Points==null?"":user.Points.ToString()),
                                 new Claim("Rank", user.Ranking==null?"":user.Ranking.ToString()),
                                 new Claim("UserName", userName),
-                                role
+                                role,
+                                clam
                               }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
