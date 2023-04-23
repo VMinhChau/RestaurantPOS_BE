@@ -6,7 +6,7 @@ namespace RestaurantPOS.Service.Interface
 {
     public interface IOrderItemService
     {
-        Task<IEnumerable<OrderItemDto>> GetOrderItemsAsync(int orderId);
+        Task<List<OrderItemDto>> GetOrderItemsAsync(int orderId);
         Task<OrderItemDto> UpdateOrderItemAsync(UpdateOrderItemDto updateOrderItem);
         Task DeleteOrderItemAsync(int id);
         Task<OrderItemDto> CreateOrderItemAsync(CreateOrderItemDto createOrderItem);

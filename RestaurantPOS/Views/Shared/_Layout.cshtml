@@ -4,46 +4,204 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RestaurantPOS</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RestaurantPOS.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nalika-icon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/js/vendor/modernizr-2.8.3.min.js" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.transitions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animate.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/meanmenu.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/morrisjs/morris.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/morrisjs/morris.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/scrollbar/jquery.mCustomScrollbar.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/metisMenu/metisMenu.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/metisMenu/metisMenu-vertical.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
+    <script src="~/js/vendor/modernizr-2.8.3.min.js" asp-append-version="true"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RestaurantPOS</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a href="index.html"><img class="main-logo" src="wwwroot/img/logo/logo.png" alt="" /></a>
+                <strong><img src="wwwroot/img/logo/logosn.png" alt="" /></strong>
+            </div>
+			<div class="nalika-profile">
+				<div class="profile-dtl">
+					<a href="#"><img src="wwwroot/img/notification/4.jpg" alt="" /></a>
+					<h2>Lakian <span class="min-dtn">Das</span></h2>
+				</div>
+				<div class="profile-social-dtl">
+					<ul class="dtl-social">
+						<li><a href="#"><i class="icon nalika-facebook"></i></a></li>
+						<li><a href="#"><i class="icon nalika-twitter"></i></a></li>
+						<li><a href="#"><i class="icon nalika-linkedin"></i></a></li>
+					</ul>
+				</div>
+			</div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <a href='@Url.Action("Index", "Dashboard")'>
+								   <i class="icon nalika-home icon-wrap"></i>
+								   <span class="mini-click-non">Dashboard</span>
+								</a>
+                            @* <ul class="submenu-angle" aria-expanded="true">
+                                <li><a title="Dashboard" href='@Url.Action("Index", "Dashboard")'><span class="mini-sub-pro">Dashboard</span></a></li>
+                            </ul> *@
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-cutlery" style="padding-right: 1rem; color: #ffffff"></i> <span class="mini-click-non">Food</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Food List" href='@Url.Action("Index", "Food")'><span class="mini-sub-pro">Food List</span></a></li>
+                                <li><a title="Add Food" href='@Url.Action("AddFood", "Food")'><span class="mini-sub-pro">Add Food</span></a></li>
+                                @* <li><a title="Edit Food" href='@Url.Action("EditFood", "Food")'><span class="mini-sub-pro">Edit Food</span></a></li> *@
+                            </ul>
                         </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-tags" style="padding-right: 0.6rem; color: #ffffff"></i> <span class="mini-click-non">Category</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Category List" href='@Url.Action("Index", "Category")'><span class="mini-sub-pro">Category List</span></a></li>
+                                <li><a title="Add Category" href='@Url.Action("Add", "Category")'><span class="mini-sub-pro">Add Category</span></a></li>
+                                @* <li><a title="Edit Food" href='@Url.Action("EditFood", "Food")'><span class="mini-sub-pro">Edit Food</span></a></li> *@
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="icon nalika-user nalika-user-rounded header-riht-inf" style="padding-right: 0.8rem; color: #ffffff"></i> <span class="mini-click-non">Users</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="User List" href='@Url.Action("Index", "User")'><span class="mini-sub-pro">User List</span></a></li>
+                                <li><a title="Add User" href='@Url.Action("AddUser", "User")'><span class="mini-sub-pro">Add User</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class='fa fa-file-text-o fa-lg' style="padding-right: 0.7rem; color: #ffffff"></i> <span class="mini-click-non">Orders</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Order List" href='@Url.Action("Index", "Order")'><span class="mini-sub-pro">Order List</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        @* <li id="removable">
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="icon nalika-new-file icon-wrap"></i> <span class="mini-click-non">Pages</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Login" href="login.html"><span class="mini-sub-pro">Login</span></a></li>
+                                <li><a title="Register" href="register.html"><span class="mini-sub-pro">Register</span></a></li>
+                                <li><a title="Lock" href="lock.html"><span class="mini-sub-pro">Lock</span></a></li>
+                                <li><a title="Password Recovery" href="password-recovery.html"><span class="mini-sub-pro">Password Recovery</span></a></li>
+                            </ul>
+                        </li> *@
                     </ul>
-                </div>
+                </nav>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - RestaurantPOS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    
+    <div class="all-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="logo-pro">
+                        <a href="index.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                                        <div class="menu-switcher-pro">
+                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+													<i class="icon nalika-menu-task"></i>
+												</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="header-top-menu tabl-d-n">
+                                            <div class="breadcome-heading">
+												<form role="search" class="">
+													<input type="text" placeholder="Search..." class="form-control">
+													<a href=""><i class="fa fa-search"></i></a>
+												</form>
+											</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <div class="header-right-info">
+                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                                                <li class="nav-item">
+                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+															<i class="fa fa-user adminpro-user-rounded header-riht-inf" aria-hidden="true"></i>
+															<span class="admin-name">Advanda Cro</span>
+															<i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
+														</a>
+                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                                        <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
+                                                        </li>
+                                                        <li><a href="login.html"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @* </div> *@
+    
+    <div class="container-body">
+        @* <main role="main" class="pb-3"> *@
+            @RenderBody()
+        @* </main> *@
+    </div>
+    @* </div> *@
+
+    <div class="footer-copyright-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-copy-right">
+                        &copy; 2023 - RestaurantPOS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script src="~/js/site.js" ></script>
+    <script src="~/js/vendor/jquery-1.12.4.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/wow.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-price-slider.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.meanmenu.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.sticky.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.scrollUp.min.js" asp-append-version="true"></script>
+    <script src="~/js/scrollbar/jquery.mCustomScrollbar.concat.min.js" asp-append-version="true"></script>
+    <script src="~/js/scrollbar/mCustomScrollbar-active.js" asp-append-version="true"></script>
+    <script src="~/js/metisMenu/metisMenu.min.js" asp-append-version="true"></script>
+    <script src="~/js/metisMenu/metisMenu-active.js" asp-append-version="true"></script>
+    <script src="~/js/plugins.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

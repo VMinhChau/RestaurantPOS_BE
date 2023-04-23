@@ -9,5 +9,6 @@ namespace RestaurantPOS.Service.Interface
         Task<OrderDto> UpdateOrderAsync(UpdateOrderDto updateOrder);
         Task DeleteOrderAsync(int id);
         Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrder);
+        Task<List<OrderDto>> GetOrders();
     }
 }

@@ -1,4 +1,6 @@
 using RestaurantPOS.Dtos.Comment.Response;
+using RestaurantPOS.Dtos.Category.Response;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RestaurantPOS.Dtos.Food.Response
 {
@@ -13,5 +15,8 @@ namespace RestaurantPOS.Dtos.Food.Response
         public double AverageRating { get; set; }
         public int CategoryId { get; set; }
         public List<CommentDto> Comments { get; set; }
+        public virtual CategoryDto CategoryNavigation {get; set;}
+        public virtual List<CategoryDto> Categories {get; set;}
+        public IFormFile ImageFile {get; set;}
     }
 }

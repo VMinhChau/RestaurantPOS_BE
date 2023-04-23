@@ -47,6 +47,13 @@ namespace RestaurantPOS.Service.Implement
             return _mapper.Map<UserDto>(entity);
         }
 
+        public async Task<List<UserDto>> GetAsync()
+        {
+            var entity = await _dbContext.User
+                .ToListAsync();
+
+            return _mapper.Map<List<UserDto>>(entity);
+        }
         public async Task<UserDto> UpdateAsync(Guid id, UpdateUserDto input)
         {
             var entity = await _dbContext.User.FirstOrDefaultAsync(c => c.Id == id);

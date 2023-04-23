@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<link rel="stylesheet" href="~/css/style.css" />
+
+@model RestaurantPOS.Dtos.Category.Response.CategoryDto
+
+<div class="breadcome-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcome-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="icon nalika-home"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>Add Category</h2>
+                                    <p>Welcome to RestaurantPOS <span class="bread-ntd">Admin Page</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="breadcomb-report">
+                                <button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="icon nalika-download"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="single-product-tab-area mg-b-30">
+    <!-- Single pro tab review Start-->
+    <div class="single-pro-review-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="review-tab-pro-inner">
+                        <ul id="myTab3" class="tab-review-design">
+                            <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i>Add Category</a></li>
+                            <!-- <li><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i> Pictures</a></li>
+                            <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i> Review</a></li> -->
+                        </ul>
+                        <div id="myTabContent" class="tab-content custom-product-edit">
+                            <form class="product-tab-list tab-pane fade active in" id="description" method="post" asp-controller="Category" asp-action="Add">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="review-content-section">
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-cutlery" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" placeholder="Name" asp-for="Name" >
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="text-center custom-pro-edt-ds">
+                                            <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10" >Save
+                                                </button>
+                                            <a class="btn btn-ctl-bt waves-effect waves-light" asp-controller="Category" asp-action="Index">Discard
+                                                </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let inputFile = document.getElementById('formFile');
+    let fileNameField = document.getElementById('filename');
+    inputFile.addEventListener('change', function(event){
+        let uploadFileName = event.target.files[0].name;
+        fileNameField.textContent = uploadFileName;
+    })
+</script>

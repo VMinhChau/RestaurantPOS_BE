@@ -1,0 +1,111 @@
+@{
+    ViewData["Title"] = "Order Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/style.css" />
+
+@model List<RestaurantPOS.DTOs.Order.Response.OrderDto>
+
+<div class="breadcome-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcome-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="icon nalika-home"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>Order List</h2>
+                                    <p>Welcome to RestaurantPOS <span class="bread-ntd">Admin Page</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="breadcomb-report">
+                                <button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="icon nalika-download"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <h4>Order List</h4>
+                        </div>
+                        <div class=" col-lg-8 add-product">
+                            @* <a asp-controller="Category" asp-action="Add">Add Order</a> *@
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Id</th>
+                            <th>User Name</th>
+                            <th>Status</th>
+                            <th>Total Price</th>
+                            <th>Purchase Id</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Settings</th>
+                        </tr>
+                        @if (Model != null && Model.Any()){
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.UserId</td>
+                                    <td>@item.Status</td>
+                                    <td>@item.TotalPrice</td>
+                                    <td>@item.PurcharseId</td>
+                                    <td>@item.CreateAt</td>
+                                    <td>@item.UpdateAt</td>
+                                    <td>
+                                        <a data-toggle="tooltip" title="View" class="pd-setting-ed" asp-controller="OrderItem" asp-action="Index" asp-route-id="@item.Id" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        @* <a data-toggle="modal" data-target="#trash" class="pd-setting-ed" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        <form class="modal fade" id="trash" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" method="post" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header" style="display: flex;">
+                                                        <h3 class="modal-title col" id="exampleModalLabel">Delete item</h3>
+                                                        <button type="button" class="close col" data-dismiss="modal" style="padding-left: 26.7rem;">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you wish to delete this item?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-secondary" data-bs-dismiss="modal" asp-controller="Category" asp-action="Index">Cancel</a>
+                                                    <input type="submit" class="btn btn-primary">
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </form>  *@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                    <div class="custom-pagination">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

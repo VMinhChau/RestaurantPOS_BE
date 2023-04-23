@@ -92,10 +92,13 @@ namespace RestaurantPOS.Service.Implement
             }
         }
 
-        public async Task<IEnumerable<OrderItemDto>> GetOrderItemsAsync(int orderId)
+        public async Task<List<OrderItemDto>> GetOrderItemsAsync(int orderId)
         {
-            return await _dbContext.OrderItems.Where(c => c.OrderId == orderId)
-                 .Select(c => _mapper.Map<OrderItemDto>(c)).ToListAsync();
+            var entity = await _dbContext.OrderItems.Include(c=>c.Food)
+            .Where(c => c.OrderId == orderId)
+            .Select(c => _mapper.Map<OrderItemDto>(c))
+            .ToListAsync();
+            return _mapper.Map<List<OrderItemDto>>(entity);
         }
 
         public async Task<OrderItemDto> UpdateOrderItemAsync(UpdateOrderItemDto updateOrderItem)

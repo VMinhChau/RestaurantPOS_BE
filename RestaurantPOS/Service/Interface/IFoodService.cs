@@ -1,4 +1,5 @@
-﻿using RestaurantPOS.Dtos.Food.Request;
+﻿using RestaurantPOS.Dtos.Category.Response;
+using RestaurantPOS.Dtos.Food.Request;
 using RestaurantPOS.Dtos.Food.Response;
 
 namespace RestaurantPOS.Service.Interface
@@ -14,5 +15,6 @@ namespace RestaurantPOS.Service.Interface
         Task<List<FoodDto>> GetPromotionAsync();
         Task<List<FoodDto>> GetAsync(Guid userId);
         Task UploadImageAsync(int id, string path);
+        List<CategoryDto> GetCate();
     }
 }

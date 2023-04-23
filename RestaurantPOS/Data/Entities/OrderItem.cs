@@ -34,5 +34,6 @@ namespace RestaurantPOS.Data.Entities
         [Column(name: "status")]
         [StringLength(100)]
         public StatusOrderItem Status { get; set; }
+        // public virtual Food FoodNavigation {get; set;}
     }
 }

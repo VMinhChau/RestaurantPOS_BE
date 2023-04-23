@@ -1,4 +1,7 @@
-﻿namespace RestaurantPOS.Data.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace RestaurantPOS.Data.Entities
 {
     public class Food
     {
@@ -11,5 +14,9 @@
         public int CategoryId { get; set; }
         public List<Comment> Comments { get; set; }
         public List<OrderItem> OrderItems { get; set; }
+        // [NotMapped]
+        // public virtual Category CategoryNavigation {get; set;}
+        
+        
     }
 }

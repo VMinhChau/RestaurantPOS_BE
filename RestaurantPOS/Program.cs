@@ -1,3 +1,4 @@
+using Azure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,18 @@ namespace RestaurantPOS
     {
         public static void Main(string[] args)
         {
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                builder =>
+                                {
+                                    builder.WithOrigins("https://localhost:7240",
+                                                        "http://localhost:3000");
+                                });
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -84,11 +96,13 @@ namespace RestaurantPOS
                 app.UseHsts();
             }
 
+            // Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors(MyAllowSpecificOrigins);
             
             app.UseAuthentication(); // This need to be added	
             app.UseAuthorization();
@@ -97,9 +111,14 @@ namespace RestaurantPOS
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            // app.MapControllerRoute(
+            //     name: "login",
+            //     pattern: "Login",
+            //     defaults: new { controller = "Login", action = "Index" }    
+            // );
+           
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.

@@ -11,5 +11,6 @@ namespace RestaurantPOS.DTOs.OrderItem.Response
         public int Quatity { get; set; }
         public int FoodId { get; set; }
         public StatusOrderItem Status { get; set; }
+        public virtual Food Food {get; set;}
     }
 }

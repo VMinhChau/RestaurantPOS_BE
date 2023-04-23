@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RestaurantPOS.Core.Enums;
 
 namespace RestaurantPOS.Dtos.User.Request
@@ -13,5 +14,7 @@ namespace RestaurantPOS.Dtos.User.Request
         public string ImageLink { get; set; }
         public bool Gender { get; set; }
         public DateTime Birthday { get; set; }
+        public virtual List<SelectListItem> Genders {get; set;}
+
     }
 }

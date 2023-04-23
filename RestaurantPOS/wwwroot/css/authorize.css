@@ -1,0 +1,31 @@
+.contain {
+    background-color: #F7F9FC;
+    margin: 0;
+    position: absolute !important;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: 0 solid #d9dee3;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px rgba(67,89,113,.12);
+    margin: 30px 0px;
+    padding: 2rem;
+}
+body {
+    background-color:  #e7edf7!important;
+}
+.container-fluid {
+    height: 100%;
+}
+.form-group label {
+    color:#697a8d;
+}
+.logo_login {
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
