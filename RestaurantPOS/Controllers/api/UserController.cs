@@ -20,12 +20,6 @@ namespace RestaurantPOS.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var users = await _service.GetAsync();
-            return View(users);
-        }
 
         [HttpGet]
         [Route("{id}")]
@@ -34,20 +28,14 @@ namespace RestaurantPOS.Controllers
             return await _service.GetAsync(id);
         }
 
-        // [HttpDelete]
-        // [Route("{id}")]
-        // public async Task DeleteAsync([FromRoute] Guid id)
-        // {
-        //     await _service.DeleteAsync(id);
-        // }
-
-        [HttpPost]
-        [Route("delete_user/{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task DeleteAsync([FromRoute] Guid id)
         {
             await _service.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
         }
+
+       
 
         [HttpPut]
         [Route("{id}")]
@@ -56,11 +44,42 @@ namespace RestaurantPOS.Controllers
             return await _service.UpdateAsync(id, input);
         }
 
-        // [HttpPost]
-        // public async Task<UserDto> CreateAsync([FromBody] CreateUserDto input)
-        // {
-        //     return await _service.CreateAsync(input);
-        // }
+        [HttpPost]
+        public async Task<UserDto> CreateAsync([FromBody] CreateUserDto input)
+        {
+            return await _service.CreateAsync(input);
+        }
+
+        [HttpPost]
+        [Route("{id}/image")]
+        public async Task<IActionResult> UploadImage([FromRoute] Guid id, IFormFile file)
+        {
+            // Save the image file to the file system
+            var filename = Path.GetFileName(file.FileName);
+            var directory = Path.Combine("Content", $"Images\\{id}");
+            var path = Path.Combine(directory, filename);
+
+            // Create the directory if it does not exist
+            Directory.CreateDirectory(directory);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            await _service.UploadImageAsync(id, path);
+
+            return Ok("Image uploaded successfully.");
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var users = await _service.GetAsync();
+            return View(users);
+        }
 
         [HttpGet]
         [Route("add_user")]
@@ -87,25 +106,11 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpPost]
-        [Route("{id}/image")]
-        public async Task<IActionResult> UploadImage([FromRoute] Guid id, IFormFile file)
+        [Route("delete_user/{id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
-            // Save the image file to the file system
-            var filename = Path.GetFileName(file.FileName);
-            var directory = Path.Combine("Content", $"Images\\{id}");
-            var path = Path.Combine(directory, filename);
-
-            // Create the directory if it does not exist
-            Directory.CreateDirectory(directory);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            await _service.UploadImageAsync(id, path);
-
-            return Ok("Image uploaded successfully.");
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

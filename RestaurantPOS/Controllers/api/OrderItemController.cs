@@ -13,21 +13,6 @@ namespace RestaurantPOS.Controllers
     {
         private readonly IOrderItemService _orderItemService;
         public OrderItemController(IOrderItemService orderItemService) => _orderItemService = orderItemService;
-        
-        // [HttpGet]
-        // [Route("{Id}")]
-        // public async Task<List<OrderItemDto>> GetOrderItemsAsync([FromRoute] int Id)
-        // {
-        //     return await _orderItemService.GetOrderItemsAsync(Id);
-           
-        // }
-        // [HttpGet]
-        // [Route("{Id}")]
-        // public async Task<IActionResult> Index([FromRoute] int Id)
-        // {
-        //     var orderItems = await _orderItemService.GetOrderItemsAsync(Id);
-        //     return View(orderItems);
-        // }
 
         [HttpGet]
         [Route("getorderitems")]
@@ -44,5 +29,22 @@ namespace RestaurantPOS.Controllers
         [HttpPut]
         public async Task<OrderItemDto> UpdateOrderItemAsync(UpdateOrderItemDto updateOrderItem) 
             => await _orderItemService.UpdateOrderItemAsync(updateOrderItem);
+
+                
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<List<OrderItemDto>> GetOrderItemsAsync([FromRoute] int Id)
+        {
+            return await _orderItemService.GetOrderItemsAsync(Id);
+           
+        }
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> Index([FromRoute] int Id)
+        {
+            var orderItems = await _orderItemService.GetOrderItemsAsync(Id);
+            return View(orderItems);
+        }
+
     }
 }

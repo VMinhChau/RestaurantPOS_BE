@@ -86,7 +86,7 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : Controller
     {
         private readonly ICategoryService _service;
         public CategoryController(ICategoryService service)
@@ -125,6 +125,56 @@ namespace RestaurantPOS.Controllers
         public async Task<CategoryDto> CreateAsync([FromBody] CreateCategoryDto input)
         {
             return await _service.CreateAsync(input);
+        }
+
+
+
+        [HttpGet]
+        [Route("add_category")]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("add_category")]
+        public async Task<IActionResult> Add([FromForm] CreateCategoryDto input)
+        {
+            await _service.CreateAsync(input);
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var cate =  await _service.GetAsync();
+            return View(cate);
+        }
+
+        [HttpPost]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        [Route("edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] int id)
+        {
+            var cate = await _service.GetAsync(id);
+            return View(cate);
+        }
+
+        [HttpPost]
+        [Route("edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] UpdateCategoryDto input)
+        
+        {
+            var cate = await _service.UpdateAsync(id, input);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

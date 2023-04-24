@@ -39,10 +39,9 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<List<FoodDto>> GetAsync()
         {
-            var foods = await _service.GetAsync();
-            return View(foods);
+            return await _service.GetAsync();
         }
 
         [HttpGet]
@@ -52,38 +51,53 @@ namespace RestaurantPOS.Controllers
             return await _service.GetPromotionAsync();
         }
 
-        // [HttpGet]
-        // [Route("delete_food/{id}")]
-        // public IActionResult DeleteFood()
-        // {
-        //     return View();
-        // }
-
-        [HttpPost]
-        [Route("delete_food/{id}")]
-        public async Task<IActionResult> DeleteFood([FromRoute] int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task DeleteAsync([FromRoute] int id)
         {
             await _service.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<FoodDto> UpdateAsync([FromRoute] int id, [FromBody] UpdateFoodDto input)
+        {
+            return await _service.UpdateAsync(id, input);
+        }
+
+        [HttpPost]
+        public async Task<FoodDto> CreateAsync([FromBody] CreateFoodDto input)
+        {
+            return await _service.CreateAsync(input);
+        }
+
+        [HttpPost]
+        [Route("{id}/image")]
+        public async Task<IActionResult> UploadImage([FromRoute] int id, IFormFile file)
+        {
+            // Save the image file to the file system
+            var filename = Path.GetFileName(file.FileName);
+            var directory = Path.Combine("Content", $"Food\\{id}");
+            var path = Path.Combine(directory, filename);
+
+            // Create the directory if it does not exist
+            Directory.CreateDirectory(directory);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            await _service.UploadImageAsync(id, path);
+
+            return Ok("Image uploaded successfully.");
         }
 
         [HttpGet]
-        [Route("edit_food/{id}")]
-        public async Task<IActionResult> EditFood([FromRoute] int id)
+        public async Task<IActionResult> Index()
         {
-            var food = await _service.GetAsync(id);
-            var categories =  _service.GetCate();
-            // var model = new FoodDto();
-            food.Categories = categories;
-            return View(food);
-        }
-
-        [HttpPost]
-        [Route("edit_food/{id}")]
-        public async Task<IActionResult> EditFood([FromRoute] int id, [FromForm] UpdateFoodDto input)
-        {
-            var food = await _service.UpdateAsync(id, input);
-            return RedirectToAction(nameof(Index));
+            var foods = await _service.GetAsync();
+            return View(foods);
         }
 
         [HttpGet]
@@ -112,26 +126,39 @@ namespace RestaurantPOS.Controllers
             
         }
 
-        [HttpPost]
-        [Route("edit_food/{id}/image")]
-        public async Task<IActionResult> UploadImage([FromRoute] int id, IFormFile file)
+        [HttpGet]
+        [Route("edit_food/{id}")]
+        public async Task<IActionResult> EditFood([FromRoute] int id)
         {
-            // Save the image file to the file system
-            var filename = Path.GetFileName(file.FileName);
-            var directory = Path.Combine("Content", $"Food\\{id}");
-            var path = Path.Combine(directory, filename);
-
-            // Create the directory if it does not exist
-            Directory.CreateDirectory(directory);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            await _service.UploadImageAsync(id, path);
-
-            return Ok("Image uploaded successfully.");
+            var food = await _service.GetAsync(id);
+            var categories =  _service.GetCate();
+            // var model = new FoodDto();
+            food.Categories = categories;
+            return View(food);
         }
+
+        [HttpPost]
+        [Route("edit_food/{id}")]
+        public async Task<IActionResult> EditFood([FromRoute] int id, [FromForm] UpdateFoodDto input)
+        {
+            var food = await _service.UpdateAsync(id, input);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        [Route("delete_food/{id}")]
+        public IActionResult DeleteFood()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("delete_food/{id}")]
+        public async Task<IActionResult> DeleteFood([FromRoute] int id)
+        {
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
