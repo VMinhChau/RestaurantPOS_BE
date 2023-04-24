@@ -73,7 +73,7 @@ namespace RestaurantPOS.Service.Implement
         public async Task<FoodDto> GetAsync(int id)
         {
             var entity = await _dbContext.Food
-                // .Include(x => x.Categories)
+                .Include(x => x.Categories)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -99,6 +99,7 @@ namespace RestaurantPOS.Service.Implement
         {
             var entity = await _dbContext.Food
                 .Include(x => x.CategoryNavigation)
+                // .Include(x => x.Categories)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
                 .ToListAsync();

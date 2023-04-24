@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using RestaurantPOS.Dtos.Category.Response;
 
 namespace RestaurantPOS.Data.Entities
 {
@@ -16,6 +17,7 @@ namespace RestaurantPOS.Data.Entities
         public List<OrderItem> OrderItems { get; set; }
         // [NotMapped]
         public virtual Category CategoryNavigation {get; set;}
+        public virtual List<CategoryDto> Categories {get; set;}
         
         
     }

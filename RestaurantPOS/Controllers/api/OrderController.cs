@@ -37,11 +37,11 @@ namespace RestaurantPOS.Controllers
             =>await _orderService.UpdateOrderAsync(updateOrder);
 
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var orders = await _orderService.GetOrders();
-            return View(orders);
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> Index()
+        // {
+        //     var orders = await _orderService.GetOrders();
+        //     return View(orders);
+        // }
     }
 }

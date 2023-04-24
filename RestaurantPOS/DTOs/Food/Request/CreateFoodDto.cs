@@ -12,7 +12,7 @@ namespace RestaurantPOS.Dtos.Food.Request
         public int CategoryId { get; set; }
         // [NotMapped]
         public virtual List<CategoryDto> Categories {get; set;}
-        // public virtual CategoryDto CategoryNavigation {get; set;}
+        public virtual CategoryDto CategoryNavigation {get; set;}
         public IFormFile ImageFile {get; set;}
     }
 }
