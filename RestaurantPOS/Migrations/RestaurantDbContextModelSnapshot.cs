@@ -227,11 +227,6 @@ namespace RestaurantPOS.Migrations
                         .HasColumnType("int")
                         .HasColumnName("quatity");
 
-                    b.Property<int>("Status")
-                        .HasMaxLength(100)
-                        .HasColumnType("int")
-                        .HasColumnName("status");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");

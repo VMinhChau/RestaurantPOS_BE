@@ -9,7 +9,6 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize("AdminOnly")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;

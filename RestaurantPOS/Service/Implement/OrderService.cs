@@ -5,6 +5,7 @@ using RestaurantPOS.Data.Entities;
 using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
 using RestaurantPOS.Service.Interface;
+using static RestaurantPOS.Common.EnumCommon;
 
 namespace RestaurantPOS.Service.Implement
 {
@@ -68,6 +69,14 @@ namespace RestaurantPOS.Service.Implement
         {
             return await _dbContext.Orders
                 .Where(c => c.UserId == userId)
+                .Select(c => _mapper.Map<OrderDto>(c))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetOrdersAsync(Guid userId,StatusOrder status)
+        {
+            return await _dbContext.Orders
+                .Where(c => c.UserId == userId && c.Status==status)
                 .Select(c => _mapper.Map<OrderDto>(c))
                 .ToListAsync();
         }

@@ -30,9 +30,5 @@ namespace RestaurantPOS.Data.Entities
         [ForeignKey(nameof(FoodId))]
         public int FoodId { get; set; }
         public Food Food { get; set; }
-
-        [Column(name: "status")]
-        [StringLength(100)]
-        public StatusOrderItem Status { get; set; }
     }
 }

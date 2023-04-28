@@ -1,5 +1,6 @@
 ﻿using RestaurantPOS.DTOs.Order.Request;
 using RestaurantPOS.DTOs.Order.Response;
+using static RestaurantPOS.Common.EnumCommon;
 
 namespace RestaurantPOS.Service.Interface
 {
@@ -9,5 +10,6 @@ namespace RestaurantPOS.Service.Interface
         Task<OrderDto> UpdateOrderAsync(UpdateOrderDto updateOrder);
         Task DeleteOrderAsync(int id);
         Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrder);
+        Task<IEnumerable<OrderDto>> GetOrdersAsync(Guid userId, StatusOrder status);
     }
 }

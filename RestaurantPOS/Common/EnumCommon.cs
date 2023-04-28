@@ -2,8 +2,7 @@
 {
     public class EnumCommon
     {
-        public enum StatusOrder { }
-        public enum StatusOrderItem { }
+        public enum StatusOrder {Pendding,Done }
         public enum Role {User, Admin}
     }
 }

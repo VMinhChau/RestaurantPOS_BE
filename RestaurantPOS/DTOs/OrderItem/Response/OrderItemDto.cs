@@ -10,6 +10,5 @@ namespace RestaurantPOS.DTOs.OrderItem.Response
         public float CurrrentPrice { get; set; }
         public int Quatity { get; set; }
         public int FoodId { get; set; }
-        public StatusOrderItem Status { get; set; }
     }
 }
