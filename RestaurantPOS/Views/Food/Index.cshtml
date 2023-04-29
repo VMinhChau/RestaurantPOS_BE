@@ -65,12 +65,13 @@
                             {
                                 <tr>
                                     <td>@item.Id</td>
-                                    <td> <img src="~/@item.ImageLink"
+                                    <td> <img src="/@item.ImageLink"
                                             class="rounded-circle"
                                             height="40" width="40"
                                             asp-append-version="true"/></td>
                                     <td>@item.Name</td>
                                     <td>@item.CategoryNavigation.Name</td>
+                                    @* <td>@item.CategoryId</td> *@
                                     <td>@item.Description</td>
                                     <td>@item.Price</td>
                                     <td>@item.AverageRating</td>

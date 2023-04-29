@@ -264,9 +264,9 @@ namespace RestaurantPOS.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ImageLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    // b.Property<string>("ImageLink")
+                    //     .IsRequired()
+                    //     .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -101,62 +101,62 @@ namespace RestaurantPOS.Controllers
             return View(foods);
         }
 
-        // [HttpGet]
-        // [Route("add_food")]
-        // public async Task<IActionResult> AddFood()
-        // {
-        //     // ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name",model.CategoryId);
-        //     var categories =  _service.GetCate();
-        //     var model = new FoodDto();
-        //     model.Categories = categories;
-        //     return View(model);
-        // }
+        [HttpGet]
+        [Route("add_food")]
+        public async Task<IActionResult> AddFood()
+        {
+            // ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name",model.CategoryId);
+            var categories =  _service.GetCate();
+            var model = new FoodDto();
+            model.Categories = categories;
+            return View(model);
+        }
 
-        // [HttpPost]
-        // [Route("add_food")]
-        // public async Task<IActionResult> AddFood([FromForm] CreateFoodDto input)
-        // {
+        [HttpPost]
+        [Route("add_food")]
+        public async Task<IActionResult> AddFood([FromForm] CreateFoodDto input)
+        {
             
             
-        //     await _service.CreateAsync(input);
+            await _service.CreateAsync(input);
 
-        //     return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
             
-        // }
+        }
 
-        // [HttpGet]
-        // [Route("edit_food/{id}")]
-        // public async Task<IActionResult> EditFood([FromRoute] int id)
-        // {
-        //     var food = await _service.GetAsync(id);
-        //     var categories =  _service.GetCate();
-        //     // var model = new FoodDto();
-        //     food.Categories = categories;
-        //     return View(food);
-        // }
+        [HttpGet]
+        [Route("edit_food/{id}")]
+        public async Task<IActionResult> EditFood([FromRoute] int id)
+        {
+            var food = await _service.GetAsync(id);
+            var categories =  _service.GetCate();
+            // var model = new FoodDto();
+            food.Categories = categories;
+            return View(food);
+        }
 
-        // [HttpPost]
-        // [Route("edit_food/{id}")]
-        // public async Task<IActionResult> EditFood([FromRoute] int id, [FromForm] UpdateFoodDto input)
-        // {
-        //     var food = await _service.UpdateAsync(id, input);
-        //     return RedirectToAction(nameof(Index));
-        // }
+        [HttpPost]
+        [Route("edit_food/{id}")]
+        public async Task<IActionResult> EditFood([FromRoute] int id, [FromForm] UpdateFoodDto input)
+        {
+            var food = await _service.UpdateAsync(id, input);
+            return RedirectToAction(nameof(Index));
+        }
 
-        // [HttpGet]
-        // [Route("delete_food/{id}")]
-        // public IActionResult DeleteFood()
-        // {
-        //     return View();
-        // }
+        [HttpGet]
+        [Route("delete_food/{id}")]
+        public IActionResult DeleteFood()
+        {
+            return View();
+        }
 
-        // [HttpPost]
-        // [Route("delete_food/{id}")]
-        // public async Task<IActionResult> DeleteFood([FromRoute] int id)
-        // {
-        //     await _service.DeleteAsync(id);
-        //     return RedirectToAction(nameof(Index));
-        // }
+        [HttpPost]
+        [Route("delete_food/{id}")]
+        public async Task<IActionResult> DeleteFood([FromRoute] int id)
+        {
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

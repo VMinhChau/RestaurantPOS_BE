@@ -7,13 +7,21 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentController : ControllerBase
+    public class CommentController : Controller
     {
         private readonly ICommentService _service;
         public CommentController(ICommentService service)
         {
             _service = service;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAsync()
+        {
+            var comments = await _service.GetAsync();
+            return View(comments);
+        }
+
 
         [HttpDelete]
         [Route("{id}")]
@@ -33,6 +41,15 @@ namespace RestaurantPOS.Controllers
         public async Task<CommentDto> CreateAsync([FromBody] CreateCommentDto input)
         {
             return await _service.CreateAsync(input);
+        }
+
+
+        [HttpGet]
+        [Route("comment")]
+        public async Task<IActionResult> Index()
+        {
+            var comments = await _service.GetAsync();
+            return View(comments);
         }
     }
 }

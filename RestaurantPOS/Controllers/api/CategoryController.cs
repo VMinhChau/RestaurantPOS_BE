@@ -129,21 +129,21 @@ namespace RestaurantPOS.Controllers
 
 
 
-        // [HttpGet]
-        // [Route("add_category")]
-        // public IActionResult Add()
-        // {
-        //     return View();
-        // }
+        [HttpGet]
+        [Route("add_category")]
+        public IActionResult Add()
+        {
+            return View();
+        }
 
-        // [HttpPost]
-        // [Route("add_category")]
-        // public async Task<IActionResult> Add([FromForm] CreateCategoryDto input)
-        // {
-        //     await _service.CreateAsync(input);
-        //     return RedirectToAction(nameof(Index));
+        [HttpPost]
+        [Route("add_category")]
+        public async Task<IActionResult> Add([FromForm] CreateCategoryDto input)
+        {
+            await _service.CreateAsync(input);
+            return RedirectToAction(nameof(Index));
 
-        // }
+        }
 
         [HttpGet]
         [Route("categories")]
@@ -153,29 +153,29 @@ namespace RestaurantPOS.Controllers
             return View(cate);
         }
 
-        // [HttpPost]
-        // [Route("delete/{id}")]
-        // public async Task<IActionResult> Delete([FromRoute] int id)
-        // {
-        //     await _service.DeleteAsync(id);
-        //     return RedirectToAction(nameof(Index));
-        // }
+        [HttpPost]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 
-        // [HttpGet]
-        // [Route("edit/{id}")]
-        // public async Task<IActionResult> Edit([FromRoute] int id)
-        // {
-        //     var cate = await _service.GetAsync(id);
-        //     return View(cate);
-        // }
+        [HttpGet]
+        [Route("edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] int id)
+        {
+            var cate = await _service.GetAsync(id);
+            return View(cate);
+        }
 
-        // [HttpPost]
-        // [Route("edit/{id}")]
-        // public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] UpdateCategoryDto input)
+        [HttpPost]
+        [Route("edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] UpdateCategoryDto input)
         
-        // {
-        //     var cate = await _service.UpdateAsync(id, input);
-        //     return RedirectToAction(nameof(Index));
-        // }
+        {
+            var cate = await _service.UpdateAsync(id, input);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

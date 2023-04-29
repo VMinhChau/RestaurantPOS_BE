@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantPOS.Data.Entities;
 using RestaurantPOS.DTOs.Token;
+using RestaurantPOS.Models.Authen;
 using RestaurantPOS.Service.Interface;
 
 namespace RestaurantPOS.Controllers
@@ -17,6 +18,7 @@ namespace RestaurantPOS.Controllers
             _authorizeService = authorizeService;
         }
         [HttpGet]
+        [Route("AdminAuth")]
         public IActionResult Index(){
             return View();
         }
@@ -24,9 +26,10 @@ namespace RestaurantPOS.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
-        public IActionResult Authenticate(string userName, string pwd)
+        // public IActionResult Authenticate(string userName, string pwd)
+        public IActionResult Authenticate(Authen input)
         {
-            var token = _authorizeService.Authorize(userName,pwd);
+            var token = _authorizeService.Authorize(input.userName,input.pwd);
 
             if (token.Check == false)
             {

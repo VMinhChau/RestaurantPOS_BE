@@ -32,12 +32,12 @@
     <div class="left-sidebar-pro">
         <nav id="sidebar" class="">
             <div class="sidebar-header">
-                <a href="index.html"><img class="main-logo" src="wwwroot/img/logo/logo.png" alt="" /></a>
-                <strong><img src="wwwroot/img/logo/logosn.png" alt="" /></strong>
+                <div style="padding-top: 1rem; font-weight: bold;"><img class="main-logo" src="~/img/RESTAURANTPOS_1.png" style="width: 12rem;" alt="" /></div>
+                <strong><img src="~/img/logo_rm.png"  style="width: 3rem;" alt="" /></strong>
             </div>
 			<div class="nalika-profile">
 				<div class="profile-dtl">
-					<a href="#"><img src="wwwroot/img/notification/4.jpg" alt="" /></a>
+					<a href="#"><img src="~/img/profile.png" alt="" /></a>
 					<h2>Lakian <span class="min-dtn">Das</span></h2>
 				</div>
 				@* <div class="profile-social-dtl">
@@ -87,6 +87,13 @@
                             <a class="has-arrow" href="#" aria-expanded="false"><i class='fa fa-file-text-o fa-lg' style="padding-right: 0.7rem; color: #ffffff"></i> <span class="mini-click-non">Orders</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="Order List" href='@Url.Action("Index", "Order")'><span class="mini-sub-pro">Order List</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class='fa fa-comments-o fa-lg' style="padding-right: 0.7rem; color: #ffffff;"></i> <span class="mini-click-non">Comments</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Comment List" href='@Url.Action("Index", "Comment")'><span class="mini-sub-pro">Comment List</span></a></li>
                                 
                             </ul>
                         </li>

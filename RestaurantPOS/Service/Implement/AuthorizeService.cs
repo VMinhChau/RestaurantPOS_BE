@@ -43,7 +43,8 @@ namespace RestaurantPOS.Service.Implement
                               {
                                 new Claim("UserName", userName),
                                 new Claim("Id", user.Id.ToString()),
-                                new Claim("Name", user.FirstName+" "+user.LastName),
+                                new Claim("LastName", user.LastName),
+                                new Claim("FirstName", user.FirstName),
                                 new Claim("Email", user.Email),
                                 new Claim("Phone", user.PhoneNumber),
                                 new Claim("Point", user.Points==null?"":user.Points.ToString()),

@@ -27,7 +27,7 @@ namespace RestaurantPOS.Service.Implement
         {
             var filename = Path.GetFileName(input.ImageFile.FileName);
             var directory = Path.Combine("Content", $"Food\\");
-            var path = Path.Combine(_webhost.WebRootPath, directory, filename);
+            var path = Path.Combine( _webhost.WebRootPath,directory, filename);
 
             // Create the directory if it does not exist
             Directory.CreateDirectory(directory);
@@ -37,7 +37,6 @@ namespace RestaurantPOS.Service.Implement
                 await input.ImageFile.CopyToAsync(stream);
             }
 
-           
 
             var entity = new Food()
             {
@@ -73,7 +72,7 @@ namespace RestaurantPOS.Service.Implement
         public async Task<FoodDto> GetAsync(int id)
         {
             var entity = await _dbContext.Food
-                .Include(x => x.Categories)
+                // .Include(x => x.Categories)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -98,13 +97,21 @@ namespace RestaurantPOS.Service.Implement
         public async Task<List<FoodDto>> GetAsync()
         {
             var entity = await _dbContext.Food
-                .Include(x => x.CategoryNavigation)
+                // .Include(x => x.CategoryNavigation)
                 // .Include(x => x.Categories)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
                 .ToListAsync();
-
-            return _mapper.Map<List<FoodDto>>(entity);
+            var e = _mapper.Map<List<FoodDto>>(entity);
+            var c =_dbContext.Category.AsNoTracking()
+            .ToList();
+            var cate = _mapper.Map<List<CategoryDto>>(c);
+            
+            foreach(var item in e){
+                item.CategoryNavigation =cate.Single(x => x.Id == item.CategoryId);
+            }
+            return e;
+            
         }
 
         public async Task<List<FoodDto>> GetPromotionAsync()
@@ -136,7 +143,7 @@ namespace RestaurantPOS.Service.Implement
         {
             // var filename = Path.GetFileName(input.ImageFile.FileName);
             // var directory = Path.Combine("Content", $"Food\\{id}");
-            // var path = Path.Combine(_webhost.WebRootPath, directory, filename);
+            // var path = Path.Combine(directory, filename);
 
             // // Create the directory if it does not exist
             // Directory.CreateDirectory(directory);
@@ -173,6 +180,62 @@ namespace RestaurantPOS.Service.Implement
 
             entity.ImageLink = path;
             await _dbContext.SaveChangesAsync();
+        }
+
+        // public async Task<FoodDto> GetFood(int id)
+        // {
+        //     var foodDto = await _dbContext.Food
+        //         // .Include(x => x.Categories)
+        //         .Include(x => x.Comments)
+        //             .ThenInclude(x => x.User)
+        //         .FirstOrDefaultAsync(c => c.Id == id);
+
+        //     return _mapper.Map<FoodDto>(foodDto);
+        // }
+
+        public async Task<List<FoodDto>> GetFoods()
+        {
+            // List<FoodDto> model = new List<FoodDto>();
+            var foods =  _dbContext.Food
+                // .Include(x => x.CategoryNavigation)
+                // .Include(x => x.Categories)
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
+                .ToList();
+            var change =  _mapper.Map<List<FoodDto>>(foods);
+            // var categories =  _mapper.Map<List<CategoryDto>>( _dbContext.Category.AsNoTracking()
+            // .ToList());
+            // foreach (var item in change){
+            //     item.CategoryNavigation = categories;
+            // }
+            // var categories = _dbContext.Category
+            //     .Include(x => x.Foods)
+            //     .ToList();
+            // foreach(var food in foods)
+            // {
+               
+            //         // item.Id = food.Id;
+            //         // item.Description = food.Description;
+            //         // item.ImageLink = food.ImageLink;
+            //         // // item.Comments = food.Comments;
+            //         // item.Price = food.Price;
+            //         // item.Name = food.Name;
+            //         // item.IsPromotion = food.IsPromotion;
+            //         model.Add(food);
+                
+            // }
+            // model = foods;
+            
+            
+            // foreach (var item in foods)
+            // {
+            //     foreach (var food in model){
+            //         food.CategoryNavigation = (CategoryDto)categories.Where(x => x.Id == food.CategoryId);
+            //     }
+            // }
+            // model.CategoryNavigation = category;
+
+            return _mapper.Map<List<FoodDto>>(foods);
         }
     }
 }

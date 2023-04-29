@@ -75,6 +75,7 @@ namespace RestaurantPOS.Controllers
 
 
         [HttpGet]
+        [Route("users")]
         public async Task<IActionResult> Index()
         {
             var users = await _service.GetAsync();
@@ -86,7 +87,7 @@ namespace RestaurantPOS.Controllers
         public async Task<IActionResult> AddUser()
         {
             // var genders =  _service.GetCate();
-            var model = new CreateUserDto();
+            var model = new Create();
             model.Genders = new List<SelectListItem>
             {
                 new SelectListItem {Text = "Male", Value = "true"},
@@ -98,7 +99,7 @@ namespace RestaurantPOS.Controllers
 
         [HttpPost]
         [Route("add_user")]
-        public async Task<IActionResult> AdUser([FromForm] CreateUserDto input)
+        public async Task<IActionResult> AddUser([FromForm] CreateUserDto input)
         {
             await _service.CreateAsync(input);
             return RedirectToAction(nameof(Index));

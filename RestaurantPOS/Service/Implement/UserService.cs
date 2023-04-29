@@ -73,7 +73,7 @@ namespace RestaurantPOS.Service.Implement
         {
             var entity = await _dbContext.User.FirstOrDefaultAsync(c => c.Id == id);
 
-            entity.ImageLink = path;
+            // entity.ImageLink = path;
             await _dbContext.SaveChangesAsync();
         }
     }

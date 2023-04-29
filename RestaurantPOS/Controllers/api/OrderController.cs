@@ -14,34 +14,32 @@ namespace RestaurantPOS.Controllers
         private readonly IOrderService _orderService;
         public OrderController(IOrderService orderService)=>_orderService= orderService;
 
-        // [HttpGet]
-        // public async Task<IActionResult> Index()
-        // {
-        //     var orders = await _orderService.GetOrders();
-        //     return View(orders);
-        // }
-
         [HttpGet]
+        [Route("get")]
         public async Task<IEnumerable<OrderDto>> GetOrdersAync(Guid userId)
             => await _orderService.GetOrdersAsync(userId);
 
         [HttpPost]
+        [Route("create")]
         public async Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrder)
             =>await _orderService.CreateOrderAsync(createOrder);
 
         [HttpDelete]
+        [Route("delete")]
         public async Task DeleteOrder(int id) => await _orderService.DeleteOrderAsync(id);
 
         [HttpPut]
+        [Route("update")]
         public async Task<OrderDto> UpdateOrderAsync(UpdateOrderDto updateOrder)
             =>await _orderService.UpdateOrderAsync(updateOrder);
 
 
-        // [HttpGet]
-        // public async Task<IActionResult> Index()
-        // {
-        //     var orders = await _orderService.GetOrders();
-        //     return View(orders);
-        // }
+        [HttpGet]
+        [Route("orders")]
+        public async Task<IActionResult> Index()
+        {
+            var orders = await _orderService.GetOrders();
+            return View(orders);
+        }
     }
 }

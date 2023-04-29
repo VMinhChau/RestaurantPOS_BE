@@ -51,7 +51,7 @@ namespace RestaurantPOS.Service.Implement
         {
             var entity = await _dbContext.Category
                 .Include(x => x.Foods)
-                .Include(x => x.Foods)
+                // .Include(x => x.Foods)
                 .ToListAsync();
 
             return _mapper.Map<List<CategoryDto>>(entity);

@@ -16,5 +16,6 @@ namespace RestaurantPOS.Service.Interface
         Task<List<FoodDto>> GetAsync(Guid userId);
         Task UploadImageAsync(int id, string path);
         List<CategoryDto> GetCate();
+        Task<List<FoodDto>> GetFoods();
     }
 }

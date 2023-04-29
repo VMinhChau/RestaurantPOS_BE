@@ -20,19 +20,22 @@ namespace RestaurantPOS.Controllers
             => await _orderItemService.GetOrderItemsAsync(orderId);
 
         [HttpPost]
+        [Route("create")]
         public async Task<OrderItemDto> CreateOrderItemAsync(CreateOrderItemDto createOrderItem)
             =>await _orderItemService.CreateOrderItemAsync(createOrderItem);
 
         [HttpDelete]
+        [Route("delete")]
         public async Task DeleteOrderItem(int id)=>await _orderItemService.DeleteOrderItemAsync(id);
 
         [HttpPut]
+         [Route("update")]
         public async Task<OrderItemDto> UpdateOrderItemAsync(UpdateOrderItemDto updateOrderItem) 
             => await _orderItemService.UpdateOrderItemAsync(updateOrderItem);
 
                 
         [HttpGet]
-        [Route("{Id}")]
+        [Route("get/{Id}")]
         public async Task<List<OrderItemDto>> GetOrderItemsAsync([FromRoute] int Id)
         {
             return await _orderItemService.GetOrderItemsAsync(Id);

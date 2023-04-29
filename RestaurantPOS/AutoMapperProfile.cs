@@ -31,8 +31,8 @@ namespace RestaurantPOS
             #region Comment
             CreateMap<Comment, CommentDto>()
                 .ForMember(p => p.FirstName, o => o.MapFrom(s => s.User.FirstName))
-                .ForMember(p => p.LastName, o => o.MapFrom(s => s.User.LastName))
-                .ForMember(p => p.ImageLink, o => o.MapFrom(s => s.User.ImageLink));
+                .ForMember(p => p.LastName, o => o.MapFrom(s => s.User.LastName));
+                // .ForMember(p => p.ImageLink, o => o.MapFrom(s => s.User.ImageLink));
             #endregion
 
             #region Category

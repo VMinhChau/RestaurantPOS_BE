@@ -50,5 +50,13 @@ namespace RestaurantPOS.Service.Implement
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<CommentDto>(entity);
         }
+
+        public async Task<List<CommentDto>> GetAsync()
+        {
+            var entity = await _dbContext.Comment
+                .ToListAsync();
+
+            return _mapper.Map<List<CommentDto>>(entity);
+        }
     }
 }

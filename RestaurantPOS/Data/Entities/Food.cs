@@ -16,8 +16,8 @@ namespace RestaurantPOS.Data.Entities
         public List<Comment> Comments { get; set; }
         public List<OrderItem> OrderItems { get; set; }
         // [NotMapped]
-        public virtual Category CategoryNavigation {get; set;}
-        public virtual List<CategoryDto> Categories {get; set;}
+        // public virtual Category CategoryNavigation {get; set;}
+        // public virtual List<CategoryDto> Categories {get; set;}          => delete
         
         
     }

@@ -23,7 +23,9 @@ namespace RestaurantPOS
                                 builder =>
                                 {
                                     builder.WithOrigins("https://localhost:7240",
-                                                        "http://localhost:3000");
+                                                        "http://localhost:3000")
+                                                        .AllowAnyHeader()
+                                                        .AllowAnyMethod();
                                 });
             });
 
