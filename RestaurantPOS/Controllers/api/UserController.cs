@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using RestaurantPOS.Core.Enums;
 using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
 using RestaurantPOS.Service.Interface;
@@ -11,15 +9,14 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize(Roles = "AdminOnly")]
-    public class UserController : Controller
+    [Authorize(Roles = "AdminOnly")]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _service;
         public UserController(IUserService service)
         {
             _service = service;
         }
-
 
         [HttpGet]
         [Route("{id}")]
@@ -34,8 +31,6 @@ namespace RestaurantPOS.Controllers
         {
             await _service.DeleteAsync(id);
         }
-
-       
 
         [HttpPut]
         [Route("{id}")]
@@ -70,48 +65,6 @@ namespace RestaurantPOS.Controllers
             await _service.UploadImageAsync(id, path);
 
             return Ok("Image uploaded successfully.");
-        }
-
-
-
-        [HttpGet]
-        [Route("users")]
-        public async Task<IActionResult> Index()
-        {
-            var users = await _service.GetAsync();
-            return View(users);
-        }
-
-        [HttpGet]
-        [Route("add_user")]
-        public async Task<IActionResult> AddUser()
-        {
-            // var genders =  _service.GetCate();
-            var model = new Create();
-            model.Genders = new List<SelectListItem>
-            {
-                new SelectListItem {Text = "Male", Value = "true"},
-                new SelectListItem {Text = "Female", Value = "false"}
-            };
-            // model.Genders = GenderUser;
-            return View(model);
-        }
-
-        [HttpPost]
-        [Route("add_user")]
-        public async Task<IActionResult> AddUser([FromForm] CreateUserDto input)
-        {
-            await _service.CreateAsync(input);
-            return RedirectToAction(nameof(Index));
-            // return View(input);
-        }
-
-        [HttpPost]
-        [Route("delete_user/{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
-        {
-            await _service.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -12,8 +12,8 @@ using RestaurantPOS.Data;
 namespace RestaurantPOS.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    [Migration("20230406122210_update_user")]
-    partial class update_user
+    [Migration("20230428160551_updateImageUser")]
+    partial class updateImageUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,11 +230,6 @@ namespace RestaurantPOS.Migrations
                         .HasColumnType("int")
                         .HasColumnName("quatity");
 
-                    b.Property<int>("Status")
-                        .HasMaxLength(100)
-                        .HasColumnType("int")
-                        .HasColumnName("status");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
@@ -263,6 +258,10 @@ namespace RestaurantPOS.Migrations
 
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImageLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

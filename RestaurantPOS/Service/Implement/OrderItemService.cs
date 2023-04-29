@@ -5,6 +5,7 @@ using RestaurantPOS.Data.Entities;
 using RestaurantPOS.DTOs.OrderItem.Request;
 using RestaurantPOS.DTOs.OrderItem.Response;
 using RestaurantPOS.Service.Interface;
+using static RestaurantPOS.Common.EnumCommon;
 
 namespace RestaurantPOS.Service.Implement
 {
@@ -20,6 +21,7 @@ namespace RestaurantPOS.Service.Implement
 
         public async Task<OrderItemDto> CreateOrderItemAsync(CreateOrderItemDto createOrderItem)
         {
+            if (!CheckStatusOrder(createOrderItem.OrderId)) throw new Exception("Order invalid");
             using (var tr = _dbContext.Database.BeginTransaction())
             {
                 try
@@ -75,6 +77,7 @@ namespace RestaurantPOS.Service.Implement
 
         public async Task DeleteAllOrderItemByOrderIdAsync(int orderId)
         {
+            if (!CheckStatusOrder(orderId)) throw new Exception("Order invalid");
             using (var tr = _dbContext.Database.BeginTransaction())
             {
                 try
@@ -108,6 +111,7 @@ namespace RestaurantPOS.Service.Implement
                 {
                     var orderItemDb = await _dbContext.OrderItems.FirstOrDefaultAsync(c => c.Id == updateOrderItem.Id);
                     if (orderItemDb == null) return new OrderItemDto();
+                    if (!CheckStatusOrder(orderItemDb.OrderId)) throw new Exception("Order invalid");
                     var orderIdDb = orderItemDb.OrderId;
                     orderItemDb.OrderId = updateOrderItem.OrderId ?? orderItemDb.OrderId;
                     if (updateOrderItem.FoodId != null)
@@ -116,17 +120,25 @@ namespace RestaurantPOS.Service.Implement
                         orderItemDb.CurrrentPrice = (float)await _dbContext.Food.Where(c => c.Id == updateOrderItem.FoodId).Select(c => c.Price).FirstOrDefaultAsync();
                     }
                     orderItemDb.Quatity = updateOrderItem.Quatity ?? orderItemDb.Quatity;
-                    orderItemDb.Status = updateOrderItem.Status ?? orderItemDb.Status;
                     if (updateOrderItem.OrderId != null)
                     {
                         await UpdateTotalPriceAsync(orderIdDb);
                         await UpdateTotalPriceAsync(updateOrderItem.OrderId.Value);
                     }
-                    await UpdateTotalPriceAsync(orderIdDb);
-                    _dbContext.Update(orderItemDb);
-                    _dbContext.SaveChanges();
-                    tr.Commit();
-                    return _mapper.Map<OrderItemDto>(orderItemDb);
+                    if (orderItemDb.Quatity > 0)
+                    {
+                        await UpdateTotalPriceAsync(orderIdDb);
+                        _dbContext.Update(orderItemDb);
+                        _dbContext.SaveChanges();
+                        tr.Commit();
+                        return _mapper.Map<OrderItemDto>(orderItemDb);
+                    }
+                    else
+                    {
+                        _dbContext.Remove(orderIdDb);
+                        _dbContext.SaveChanges();
+                        tr.Commit();
+                        return new OrderItemDto(); }
                 }
                 catch (Exception ex)
                 {
@@ -148,6 +160,14 @@ namespace RestaurantPOS.Service.Implement
             _dbContext.Update(orderDb);
             await _dbContext.SaveChangesAsync();
             return;
+        }
+
+        private bool CheckStatusOrder(int id)
+        {
+            var order = _dbContext.Orders.FirstOrDefault(c => c.Id == id);
+            if (order == null) return false;
+            if (order.Status == StatusOrder.Done) return false;
+            return true;
         }
     }
 }
