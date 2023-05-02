@@ -70,6 +70,7 @@ namespace RestaurantPOS.Service.Implement
             var entity = await _dbContext.Orders.ToListAsync();
             return _mapper.Map<List<OrderDto>>(entity);
         }
+        
         public async Task<IEnumerable<OrderDto>> GetOrdersAsync(Guid userId)
         {
             return await _dbContext.Orders

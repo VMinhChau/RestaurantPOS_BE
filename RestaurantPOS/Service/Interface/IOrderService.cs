@@ -11,5 +11,6 @@ namespace RestaurantPOS.Service.Interface
         Task DeleteOrderAsync(int id);
         Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrder);
         Task<IEnumerable<OrderDto>> GetOrdersAsync(Guid userId, StatusOrder status);
+        Task<List<OrderDto>> GetOrders();
     }
 }
