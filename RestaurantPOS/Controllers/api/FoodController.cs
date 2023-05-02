@@ -151,7 +151,7 @@ namespace RestaurantPOS.Controllers
         //     return View();
         // }
 
-        // [HttpDelete]
+        [HttpGet] //DELETE
         [Route("delete_food/{id}")]
         public async Task< IActionResult> DeleteFood([FromRoute] int id)
         {

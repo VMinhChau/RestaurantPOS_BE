@@ -44,6 +44,7 @@ namespace RestaurantPOS.Controllers
             }
         }
 
+        [HttpGet]
         [Route("Logout")]
         public IActionResult Logout(){
             HttpContext.Session.Clear();
