@@ -53,7 +53,7 @@ namespace RestaurantPOS.Service.Implement
             return _mapper.Map<CommentDto>(entity);
         }
 
-        public async Task<List<CommentDto>> GetAsync()
+        public async Task<List<CommentDto>> GetComments()
         {
             var e = await _dbContext.Comment.ToListAsync();
             var entity = _mapper.Map<List<CommentDto>>(e);
@@ -66,10 +66,11 @@ namespace RestaurantPOS.Service.Implement
                 item.LastName = user.Single(x => x.Id == item.UserId).LastName;
                 item.FoodNavigation = food.Single(x => x.Id == item.FoodId);
             }
+
             return entity;
         }
 
-        public async Task<List<CommentDto>> GetComments() {
+        public async Task<List<CommentDto>> GetAsync() {
             var entity = await _dbContext.Comment
                 .Include(x => x.User)
                 .ToListAsync();

@@ -16,10 +16,9 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<List<CommentDto>> GetAsync()
         {
-            var comments = await _service.GetAsync();
-            return View(comments);
+           return await _service.GetAsync();
         }
 
 
