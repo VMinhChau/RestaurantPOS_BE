@@ -5,6 +5,7 @@ using RestaurantPOS.Dtos.Food.Request;
 using RestaurantPOS.Dtos.Food.Response;
 using RestaurantPOS.Service.Interface;
 
+// using PagedList;
 namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
@@ -52,7 +53,7 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("delete/{id}")]
         public async Task DeleteAsync([FromRoute] int id)
         {
             await _service.DeleteAsync(id);
@@ -96,7 +97,8 @@ namespace RestaurantPOS.Controllers
         [HttpGet]
         [Route("foods")]
         public async Task<IActionResult> Index()
-        {
+        {   
+            ViewBag.message = HttpContext.Session.GetString("_Name");
             var foods = await _service.GetAsync();
             return View(foods);
         }
@@ -119,7 +121,6 @@ namespace RestaurantPOS.Controllers
             
             
             await _service.CreateAsync(input);
-
             return RedirectToAction(nameof(Index));
             
         }
@@ -143,16 +144,16 @@ namespace RestaurantPOS.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        [Route("delete_food/{id}")]
-        public IActionResult DeleteFood()
-        {
-            return View();
-        }
+        // [HttpGet]
+        // [Route("delete_food/{id}")]
+        // public IActionResult DeleteFood()
+        // {
+        //     return View();
+        // }
 
-        [HttpPost]
+        // [HttpDelete]
         [Route("delete_food/{id}")]
-        public async Task<IActionResult> DeleteFood([FromRoute] int id)
+        public async Task< IActionResult> DeleteFood([FromRoute] int id)
         {
             await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));

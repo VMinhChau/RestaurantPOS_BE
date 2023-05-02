@@ -106,7 +106,7 @@ namespace RestaurantPOS.Controllers
             // return View(input);
         }
 
-        [HttpPost]
+        // [HttpPost]
         [Route("delete_user/{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {

@@ -6,7 +6,7 @@ using RestaurantPOS.Data.Entities;
 using RestaurantPOS.Dtos.User.Request;
 using RestaurantPOS.Dtos.User.Response;
 using RestaurantPOS.Service.Interface;
-
+using RestaurantPOS.Models;
 namespace RestaurantPOS.Service.Implement
 {
     public class UserService : IUserService
@@ -75,6 +75,14 @@ namespace RestaurantPOS.Service.Implement
 
             // entity.ImageLink = path;
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<UserVM>> GetUsers()
+        {
+            var entity = await _dbContext.User.ToListAsync();
+            
+
+            return _mapper.Map<List<UserVM>>(entity);
         }
     }
 }

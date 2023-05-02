@@ -48,7 +48,8 @@
                             @* <a asp-controller="Category" asp-action="Add">Add Order</a> *@
                         </div>
                     </div>
-                    <table>
+                    <table id="myTable">
+                    <thead>
                         <tr>
                             <th>Id</th>
                             <th>User Id</th>
@@ -59,13 +60,17 @@
                             <th>Updated At</th>
                             <th>Settings</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @if (Model != null && Model.Any()){
                             @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>@item.Id</td>
                                     <td>@item.UserId</td>
-                                    <td>@item.Status</td>
+                                    <td>
+                                         @(item.Status ==0?"Pending":"Done")
+                                    </td>
                                     <td>@item.TotalPrice</td>
                                     <td>@item.PurcharseId</td>
                                     <td>@item.CreateAt</td>
@@ -94,16 +99,8 @@
                                 </tr>
                             }
                         }
+                    </tbody>
                     </table>
-                    <div class="custom-pagination">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>

@@ -153,7 +153,7 @@ namespace RestaurantPOS.Controllers
             return View(cate);
         }
 
-        [HttpPost]
+        // [HttpPost]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

@@ -9,5 +9,6 @@ namespace RestaurantPOS.Service.Interface
         Task<CommentDto> UpdateAsync(int id, UpdateCommentDto input);
         Task DeleteAsync(int id);
         Task<List<CommentDto>> GetAsync();
+        Task<List<CommentDto>> GetComments();
     }
 }

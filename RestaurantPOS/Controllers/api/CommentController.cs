@@ -48,7 +48,7 @@ namespace RestaurantPOS.Controllers
         [Route("comment")]
         public async Task<IActionResult> Index()
         {
-            var comments = await _service.GetAsync();
+            var comments = await _service.GetComments();
             return View(comments);
         }
     }

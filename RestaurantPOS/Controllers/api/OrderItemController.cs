@@ -41,13 +41,13 @@ namespace RestaurantPOS.Controllers
             return await _orderItemService.GetOrderItemsAsync(Id);
            
         }
-        // [HttpGet]
-        // [Route("{Id}")]
-        // public async Task<IActionResult> Index([FromRoute] int Id)
-        // {
-        //     var orderItems = await _orderItemService.GetOrderItemsAsync(Id);
-        //     return View(orderItems);
-        // }
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> Index([FromRoute] int Id)
+        {
+            var orderItems = await _orderItemService.GetOrderItemsAsync(Id);
+            return View(orderItems);
+        }
 
     }
 }

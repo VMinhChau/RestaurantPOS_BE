@@ -116,7 +116,7 @@ namespace RestaurantPOS.Service.Implement
                         orderItemDb.CurrrentPrice = (float)await _dbContext.Food.Where(c => c.Id == updateOrderItem.FoodId).Select(c => c.Price).FirstOrDefaultAsync();
                     }
                     orderItemDb.Quatity = updateOrderItem.Quatity ?? orderItemDb.Quatity;
-                    orderItemDb.Status = updateOrderItem.Status ?? orderItemDb.Status;
+                    // orderItemDb.Status = updateOrderItem.Status ?? orderItemDb.Status;
                     if (updateOrderItem.OrderId != null)
                     {
                         await UpdateTotalPriceAsync(orderIdDb);

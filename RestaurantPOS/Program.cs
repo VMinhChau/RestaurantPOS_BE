@@ -88,6 +88,15 @@ namespace RestaurantPOS
                     policy.RequireClaim("IsAdmin"));
             });
 
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -108,6 +117,8 @@ namespace RestaurantPOS
             
             app.UseAuthentication(); // This need to be added	
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

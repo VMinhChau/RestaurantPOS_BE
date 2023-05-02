@@ -108,7 +108,7 @@ namespace RestaurantPOS.Service.Implement
             var cate = _mapper.Map<List<CategoryDto>>(c);
             
             foreach(var item in e){
-                item.CategoryNavigation =cate.Single(x => x.Id == item.CategoryId);
+                item.CategoryNavigation = cate.Single(x => x.Id == item.CategoryId);
             }
             return e;
             
@@ -141,19 +141,19 @@ namespace RestaurantPOS.Service.Implement
 
         public async Task<FoodDto> UpdateAsync(int id, UpdateFoodDto input)
         {
-            // var filename = Path.GetFileName(input.ImageFile.FileName);
-            // var directory = Path.Combine("Content", $"Food\\{id}");
-            // var path = Path.Combine(directory, filename);
+            var filename = Path.GetFileName(input.ImageFile.FileName);
+            var directory = Path.Combine("Content", $"Food\\{id}");
+            var path = Path.Combine(directory, filename);
 
-            // // Create the directory if it does not exist
-            // Directory.CreateDirectory(directory);
+            // Create the directory if it does not exist
+            Directory.CreateDirectory(directory);
 
-            // using (var stream = new FileStream(path, FileMode.Create))
-            // {
-            //     await input.ImageFile.CopyToAsync(stream);
-            // }
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await input.ImageFile.CopyToAsync(stream);
+            }
 
-            // await UploadImageAsync(id, path);
+            await UploadImageAsync(id, path);
 
             var entity = await _dbContext.Food.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -162,7 +162,7 @@ namespace RestaurantPOS.Service.Implement
             entity.IsPromotion = input.IsPromotion;
             entity.CategoryId = input.CategoryId;
             entity.Description = input.Description;
-            entity.ImageLink = "";
+            entity.ImageLink = path;
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<FoodDto>(entity);

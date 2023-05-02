@@ -12,7 +12,7 @@
 //         public string ImageLink { get; set; }
 //         public double AverageRating { get; set; }
 //         public int CategoryId { get; set; }
-//         public List<CommentDto> Comments { get; set; }
+//         // public List<CommentDto> Comments { get; set; }
 //         // public virtual CategoryDto Category {get; set;}
 //     }
 // }

@@ -1,5 +1,5 @@
 using RestaurantPOS.Dtos.User.Response;
-
+using RestaurantPOS.Dtos.Food.Response;
 namespace RestaurantPOS.Dtos.Comment.Response
 {
     public class CommentDto
@@ -12,5 +12,6 @@ namespace RestaurantPOS.Dtos.Comment.Response
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageLink { get; set; }
+        public virtual FoodDto FoodNavigation {get; set;}
     }
 }

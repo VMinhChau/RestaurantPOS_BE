@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="~/css/style.css" />
 
 @model List<RestaurantPOS.Dtos.User.Response.UserDto>
+@* @model List<RestaurantPOS.Models.UserVM> *@
 
 <div class="breadcome-area">
     <div class="container-fluid">
@@ -48,7 +49,8 @@
                             <a asp-controller="User" asp-action="AddUser">Add User</a>
                         </div>
                     </div>
-                    <table>
+                    <table id="myTable">
+                    <thead>
                         <tr>
                             <th>Id</th>
                             @* <th>Image</th> *@
@@ -60,8 +62,11 @@
                             <th>Email</th>
                             <th>Points</th>
                             <th>Ranking</th>
+                            <th>Role</th>
                             <th>Setting</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @if (Model != null && Model.Any()){
                             @foreach (var item in Model)
                             {
@@ -81,9 +86,11 @@
                                     <td>@item.Email</td>
                                     <td>@item.Points</td>
                                     <td>@item.Ranking</td>
+                                    <td>@item.Role</td>
                                     <td>
-                                        <a data-toggle="modal" data-target="#trash" class="pd-setting-ed" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        <form class="modal fade" id="trash" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" method="post" asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id">
+                                        <a data-toggle="tooltip" title="Delete" class="pd-setting-ed" asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        @* <a data-toggle="modal" data-target="#trash" class="pd-setting-ed" ><i class="fa fa-trash-o" aria-hidden="true"></i></a> *@
+                                        @* <form class="modal fade" id="trash" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" method="post" asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header" style="display: flex;">
@@ -99,21 +106,13 @@
                                                 </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> *@
                                     </td>
                                 </tr>
                             }
                         }
+                    </tbody>
                     </table>
-                    <div class="custom-pagination">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
