@@ -9,8 +9,8 @@ namespace RestaurantPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "AdminOnly")]
-    public class UserController : ControllerBase
+    // [Authorize(Roles = "AdminOnly")]
+    public class UserController : Controller
     {
         private readonly IUserService _service;
         public UserController(IUserService service)
@@ -65,6 +65,48 @@ namespace RestaurantPOS.Controllers
             await _service.UploadImageAsync(id, path);
 
             return Ok("Image uploaded successfully.");
+        }
+
+
+
+        [HttpGet]
+        [Route("users")]
+        public async Task<IActionResult> Index()
+        {
+            var users = await _service.GetAsync();
+            return View(users);
+        }
+
+        [HttpGet]
+        [Route("add_user")]
+        public async Task<IActionResult> AddUser()
+        {
+            // var genders =  _service.GetCate();
+            var model = new Create();
+            model.Genders = new List<SelectListItem>
+            {
+                new SelectListItem {Text = "Male", Value = "true"},
+                new SelectListItem {Text = "Female", Value = "false"}
+            };
+            // model.Genders = GenderUser;
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add_user")]
+        public async Task<IActionResult> AddUser([FromForm] CreateUserDto input)
+        {
+            await _service.CreateAsync(input);
+            return RedirectToAction(nameof(Index));
+            // return View(input);
+        }
+
+        [HttpGet]
+        [Route("delete_user/{id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
+        {
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

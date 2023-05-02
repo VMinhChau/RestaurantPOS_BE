@@ -7,6 +7,7 @@ namespace RestaurantPOS.Dtos.Food.Request
         public bool IsPromotion { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        // public string ImageLink {get; set; }
         public IFormFile ImageFile {get; set;}
     }
 }

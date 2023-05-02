@@ -15,6 +15,8 @@ namespace RestaurantPOS.Dtos.User.Response
         public DateTime Birthday { get; set; }
         public double Points { get; set; }
         public RankUser Ranking { get; set; }
+        public string Role { get; set; }
         public virtual List<SelectListItem> Genders {get; set;}
+        
     }
 }

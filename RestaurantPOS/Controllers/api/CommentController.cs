@@ -16,10 +16,9 @@ namespace RestaurantPOS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<List<CommentDto>> GetAsync()
         {
-            var comments = await _service.GetAsync();
-            return View(comments);
+           return await _service.GetAsync();
         }
 
 
@@ -48,7 +47,7 @@ namespace RestaurantPOS.Controllers
         [Route("comment")]
         public async Task<IActionResult> Index()
         {
-            var comments = await _service.GetAsync();
+            var comments = await _service.GetComments();
             return View(comments);
         }
     }
